@@ -1,0 +1,25 @@
+{
+  "name": "wl-core",
+  "version": "1.0.0",
+  "description": "项目基础核心库",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/babel src --out-dir dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wl-ui/wl.git"
+  },
+  "keywords": [
+    "wl-core"
+  ],
+  "author": "weilan <17796646068@163.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.4.4"
+  }
+}
