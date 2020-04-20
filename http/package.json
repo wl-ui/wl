@@ -1,7 +1,7 @@
 {
-  "name": "wl-core",
+  "name": "wl-http",
   "version": "1.0.0",
-  "description": "项目基础核心库",
+  "description": "基础通信库封装",
   "main": "dist/index.js",
   "scripts": {
     "build": "./node_modules/.bin/babel src --out-dir dist",
@@ -12,7 +12,10 @@
     "url": "git+ssh://git@github.com/wl-ui/wl.git"
   },
   "keywords": [
-    "wl-core"
+    "wl-http",
+    "http",
+    "axios",
+    "vue"
   ],
   "author": "weilan <17796646068@163.com>",
   "license": "ISC",
@@ -25,5 +28,8 @@
     "@babel/core": "^7.4.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.4.4"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
   }
 }
