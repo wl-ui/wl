@@ -9,6 +9,7 @@ export const _httpOptions = {
     "Content-Type": "application/json;charset=UTF-8"
   },
   timeout: 5000, // request timeout
+  method: 'post' // 默认请求方法
 }
 
 // http类型
@@ -18,4 +19,11 @@ export const _httpType = {
   PUT: 'put',
   PATCH: 'patch',
   DELETE: 'delete'
+}
+
+// 后台状态码
+export const _httpCode = {
+  ok: 200,
+  err: 300,
+  noAuth: 401
 }
