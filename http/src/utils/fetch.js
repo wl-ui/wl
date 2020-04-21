@@ -10,8 +10,8 @@ import { _httpOptions, _httpCode } from "../config/settings"; // 导入配置项
 
 /**
  * @method 配置请求拦截器
- * @param {*} instance axios实例
- * @param {*} requestInterceptorSuccessCb 非必填 请求拦截器成功回调，必须返回一个config对象
+ * @param {Object} instance axios实例
+ * @param {Function} requestInterceptorSuccessCb 非必填 请求拦截器成功回调，必须返回一个config对象
  */
 const _configRequestInterceptor = (instance, requestInterceptorSuccessCb) => {
   instance.interceptors.request.use(config => {
@@ -30,11 +30,11 @@ const _configRequestInterceptor = (instance, requestInterceptorSuccessCb) => {
 
 /**
  * @method 配置响应拦截器
- * @param {*} instance axios实例
- * @param {*} responseInterceptorSuccessCb 非必填 响应拦截器成功回调，必须返回一个response对象
- * @param {*} responseInterceptorErrorCb 非必填 响应拦截器失败回调，必须返回一个response对象
- * @param {*} retry 非必填 请求失败自动重试次数 默认2
- * @param {*} retryDelay 非必填 请求失败自动重试时间间隔 默认1000ms 
+ * @param {Object} instance axios实例
+ * @param {Function} responseInterceptorSuccessCb 非必填 响应拦截器成功回调，必须返回一个response对象
+ * @param {Function} responseInterceptorErrorCb 非必填 响应拦截器失败回调，必须返回一个response对象
+ * @param {Number} retry 非必填 请求失败自动重试次数 默认2
+ * @param {Number} retryDelay 非必填 请求失败自动重试时间间隔 默认1000ms 
  */
 const _configResponseInterceptor = (instance, responseInterceptorSuccessCb, responseInterceptorErrorCb, retry, retryDelay) => {
   // 自动重试机制
@@ -148,19 +148,26 @@ const _configResponseInterceptor = (instance, responseInterceptorSuccessCb, resp
 }
 
 export default class Fetch {
+  constructor() {
+    // this.__successCode__ = _httpCode.ok;
+    this.__http__ = null;
+  }
+
   /**
    * @method 创建axios实例
-   * @param {*} param0 配置项
+   * @param {Object} param0 配置项
    * @description retry:Number 请求失败自动重连次数 默认2
    * @description retryDelay:Number 请求失败自动重连时间间隔 默认1000ms
    * @description withCredentials:Boolean 开启请求跨域 默认true
    * @description headers:Object 请求头配置 默认"Content-Type": "application/json;charset=UTF-8"
    * @description timeout:Number 请求超时时间 默认5000
    * @description baseURL:String 请求地址前缀 默认''
+   * @description successCode:Number //废弃 后台请求成功状态码，默认200 将会把所有非200的请求回调归入reject
    * @description expand:Object 其他需要扩展的配置项 other
-   * @param {*} requestInterceptorSuccessCb 非必填 请求拦截器成功回调，必须返回一个config对象
-   * @param {*} responseInterceptorSuccessCb 非必填 响应拦截器成功回调，必须返回一个response对象
-   * @param {*} responseInterceptorErrorCb 非必填 响应拦截器失败回调，必须返回一个response对象
+   * @param {Function} requestInterceptorSuccessCb 非必填 请求拦截器成功回调，必须返回一个config对象
+   * @param {Function} responseInterceptorSuccessCb 非必填 响应拦截器成功回调，必须返回一个response对象
+   * @param {Function} responseInterceptorErrorCb 非必填 响应拦截器失败回调，必须返回一个response对象
+   * @returns 返回创建后的axios实例
    */
   static create({
     retry = _httpOptions.retry,
@@ -169,8 +176,11 @@ export default class Fetch {
     headers = _httpOptions.headers,
     timeout = _httpOptions.timeout,
     baseURL = _httpOptions.baseURL,
+    // successCode,
     ...expand
-  }, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb) {
+  } = {}, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb) {
+    // 处理类内部successCode
+    // this._successCode = successCode ?? _httpCode.ok;
     // 整理配置项
     const _options = {
       baseURL,
@@ -185,27 +195,51 @@ export default class Fetch {
     _configRequestInterceptor(_http, requestInterceptorSuccessCb);
     // 注册响应拦截器
     _configResponseInterceptor(_http, responseInterceptorSuccessCb, responseInterceptorErrorCb, retry, retryDelay);
+    this.__http__ = _http;
     return _http;
   }
 
   /**
    * 通过向 axios 传递相关配置来创建单个请求
-   * @param {*} param0 
+   * @param {Object} param0 
+   * @description url:String 请求地址
+   * @description method:String 请求方法类型 默认post
+   * @description params:Object 即将与请求一起发送的 URL 参数
+   * @description data:Object 作为请求主体被发送的数据
+   * @description instance:Object 外部传入的axios实例，默认使用内部创建，无特殊需求不得在外部创建多余实例
+   * @description expand:Object 扩展对象，其他不常用的axios(options)配置项放在expand字段传入，key值和axios文档一致
    */
   static axios({
     url,
     method = _httpOptions.method,
-    baseURL = _httpOptions.baseURL,
-    transformRequest,
-    transformResponse,
-    headers,
     params,
-    timeout,
-    withCredentials,
-    auth,
-    responseType,
+    data,
+    instance,
+    errCode,
     ...expand
   } = {}) {
+    // 废弃 返回一个新的promise，注意：此promise将把http错误和与create axios时
+    // 整理请求参数
+    const _options = {
+      url,
+      method,
+      params,
+      data,
+      ...expand
+    }
+    // 处理请求并直接返回_http()
+    const _http = instance ? instance() : this.__http__;
+    return _http(_options);
+  }
 
+  /**
+   * 执行多个并发请求
+   * @param {Array} list axios Promise 对象
+   */
+  static all(list) {
+    if (!DataType.isArray(list)) {
+      throw Error('必须传入一个数组！');
+    }
+    return this.__http__.all(list)
   }
 }
