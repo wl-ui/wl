@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { Event } from "wl-core";
+
 export default {
   name: "wl-add",
   props: {
@@ -25,9 +27,9 @@ export default {
     }
   },
   methods: {
-    submitAdd() {
+    submitAdd: Event.throttle(function() {
       this.$emit("click");
-    }
+    }, 1000)
   }
 };
 </script>

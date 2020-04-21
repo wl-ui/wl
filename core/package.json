@@ -1,6 +1,6 @@
 {
   "name": "wl-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "项目基础核心库",
   "main": "dist/index.js",
   "scripts": {
@@ -20,9 +20,6 @@
     "url": "https://github.com/wl-ui/wl/issues"
   },
   "homepage": "https://github.com/wl-ui/wl#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",

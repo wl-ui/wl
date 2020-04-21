@@ -44,3 +44,8 @@ const debounce = (handler, delay = 500) => {
     }, delay)
   }
 }
+
+export {
+  throttle,
+  debounce
+}
