@@ -1,0 +1,42 @@
+{
+  "name": "wl-http",
+  "version": "1.0.0",
+  "description": "wlui库 基础ui库",
+  "main": "dist/wlui.common.js",
+  "scripts": {
+    "build": "vue-cli-service build --target dist --name wlui --dest dist ./packages/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/wl-ui/wl.git"
+  },
+  "keywords": [
+    "wl-ui",
+    "wlui",
+    "elementUi",
+    "vue"
+  ],
+  "author": "weilan <17796646068@163.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wl-ui/wl/issues"
+  },
+  "homepage": "https://github.com/wl-ui/wl#readme",
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.12.0",
+    "@vue/cli-plugin-eslint": "^3.12.0",
+    "@vue/cli-service": "^3.12.0",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-component": "^1.1.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^7.3.1",
+    "vue-cli-plugin-element": "^1.0.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "dependencies": {
+    "vue": "^2.6.11"
+  }
+}

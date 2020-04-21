@@ -12,8 +12,6 @@ core/node_modules/
 core/node_modules
 http/node_modules/
 http/node_modules
-auth/node_modules/
-auth/node_modules
 ui/node_modules/
 ui/node_modules
 vue/node_modules/

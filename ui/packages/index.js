@@ -8,7 +8,7 @@ import FtFadein from "./ft-fadein/";
 import FtTableReport from "./ft-table-report/";
 import FtInput from "./ft-input/";
 
-const components = [FtButton, FtContainer, FtContextmenu, FtTable, FtScroll, FtAdd, FtFadein, FtTableReport, FtInput];
+const components = [FtContainer, FtContextmenu, FtTable, FtScroll, FtAdd, FtFadein, FtTableReport, FtInput];
 
 
 const install = function (Vue) {
@@ -23,7 +23,6 @@ if (typeof window !== "undefined" && window.Vue) {
 
 export default {
   install,
-  FtButton,
   FtContainer,
   FtContextmenu,
   FtTable,
