@@ -1,18 +1,18 @@
 <template>
-  <div class="ft-container">
+  <div class="wl-container">
     <!-- 主体内容区 - 头部 -->
-    <div class="ft-container-header" v-if="$slots.header">
+    <div class="wl-container-header" v-if="$slots.header">
       <slot name="header"></slot>
     </div>
     <!-- 主体区 -->
-    <el-scrollbar class="ft-container-scroll" v-if="useScroll">
+    <el-scrollbar class="wl-container-scroll" v-if="useScroll">
       <slot></slot>
     </el-scrollbar>
-    <div v-else class="ft-container-main" :class="ftBodyClass">
+    <div v-else class="wl-container-main" :class="wlBodyClass">
       <slot></slot>
     </div>
     <!-- 主体内容区 - 底部 -->
-    <div class="ft-container-footer" v-if="$slots.footer">
+    <div class="wl-container-footer" v-if="$slots.footer">
       <slot name="footer"></slot>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "ft-container",
+  name: "wl-container",
   props: {
     // 是否使用带scroll的main
     useScroll: {
@@ -28,14 +28,14 @@ export default {
       default: true
     },
     // 自定义main的class
-    ftBodyClass: [String, Function],
+    wlBodyClass: [String, Function],
     // 更多条件
   }
 };
 </script>
 
 <style lang="scss">
-.ft-container {
+.wl-container {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -47,7 +47,7 @@ export default {
   flex-shrink: 1;
   padding: 8px;
 
-  > .ft-container-scroll {
+  > .wl-container-scroll {
     flex: 1;
     flex-grow: 1;
     flex-shrink: 1;
@@ -55,7 +55,7 @@ export default {
       overflow-x: hidden;
     }
   }
-  > .ft-container-main {
+  > .wl-container-main {
     position: relative;
     flex: 1;
     flex-grow: 1;

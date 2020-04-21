@@ -1,5 +1,5 @@
 <template>
-  <div class="ft-table-report">
+  <div class="wl-table-report">
     <!-- 按钮区 -->
     <el-row class="check-list" v-if="useCheckList">
       <el-col :span="21">
@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: "ft-table-report",
+  name: "wl-table-report",
   props: {
     useCheckList: {
       type: Boolean,
@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style lang="scss">
-.ft-table-report {
+.wl-table-report {
   display: flex;
   flex-direction: column;
   .check-list {

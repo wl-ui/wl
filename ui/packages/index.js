@@ -1,14 +1,14 @@
 
-import FtContainer from "./ft-container/";
-import FtContextmenu from "./ft-contextmenu/";
-import FtTable from "./ft-table/";
-import FtScroll from "./ft-scroll/";
-import FtAdd from "./ft-add/";
-import FtFadein from "./ft-fadein/";
-import FtTableReport from "./ft-table-report/";
-import FtInput from "./ft-input/";
+import WlContainer from "./wl-container";
+import WlContextmenu from "./wl-contextmenu";
+import WlTable from "./wl-table";
+import WlScroll from "./wl-scroll";
+import WlAdd from "./wl-add";
+import WlFadein from "./wl-fadein";
+import WlTableReport from "./wl-table-report";
+import WlInput from "./wl-input";
 
-const components = [FtContainer, FtContextmenu, FtTable, FtScroll, FtAdd, FtFadein, FtTableReport, FtInput];
+const components = [WlContainer, WlContextmenu, WlTable, WlScroll, WlAdd, WlFadein, WlTableReport, WlInput];
 
 
 const install = function (Vue) {
@@ -23,12 +23,12 @@ if (typeof window !== "undefined" && window.Vue) {
 
 export default {
   install,
-  FtContainer,
-  FtContextmenu,
-  FtTable,
-  FtScroll,
-  FtAdd,
-  FtFadein,
-  FtTableReport,
-  FtInput
+  WlContainer,
+  WlContextmenu,
+  WlTable,
+  WlScroll,
+  WlAdd,
+  WlFadein,
+  WlTableReport,
+  WlInput
 };

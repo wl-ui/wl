@@ -25,7 +25,7 @@
 import { isNum } from "@/library/js/validate"; // 导入自带校验规则
 
 export default {
-  name: "ft-input",
+  name: "wl-input",
   props: {
     value: [String, Number],
     number: {

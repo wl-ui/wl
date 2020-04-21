@@ -1,8 +1,7 @@
 <template>
-  <div class="d2-contentmenu-list" @click="rowClick">
-    <div v-for="item in menulist" :key="item.value" :data-value="item.value" class="d2-contentmenu-item" flex="cross:center main:center">
-      <d2-icon v-if="item.icon" :name="item.icon"/>
-      <div class="d2-contentmenu-item-title" flex-box="1">
+  <div class="wl-contentmenu-list" @click="rowClick">
+    <div v-for="item in menulist" :key="item.value" :data-value="item.value" class="wl-contentmenu-item" flex="cross:center main:center">
+      <div class="wl-contentmenu-item-title" flex-box="1">
         {{item.title}}
       </div>
     </div>
@@ -11,7 +10,7 @@
 
 <script>
 export default {
-  name: 'd2-contextmenu-list',
+  name: 'wl-contextmenu-list',
   props: {
     menulist: {
       type: Array,
@@ -31,8 +30,8 @@ export default {
 </script>
 
 <style lang="scss">
-.d2-contentmenu-list {
-  .d2-contentmenu-item {
+.wl-contentmenu-list {
+  .wl-contentmenu-item {
     padding: 8px 20px 8px 15px;
     margin: 0;
     font-size: 14px;
@@ -42,7 +41,7 @@ export default {
       background: #ecf5ff;
       color: #66b1ff;
     }
-    .d2-contentmenu-item-title {
+    .wl-contentmenu-item-title {
       margin-left: 10px;
     }
   }

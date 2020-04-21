@@ -1,18 +1,19 @@
 <template>
-  <el-scrollbar class="ft-scroll">
+  <el-scrollbar class="wl-scroll">
     <slot></slot>
   </el-scrollbar>
 </template>
 
 <script>
 export default {
-  name: "ft-scroll"
+  name: "wl-scroll"
 };
 </script>
 
 <style lang="scss">
-.ft-scroll {
+.wl-scroll {
   flex: 1;
+  height: 100%;
   > .el-scrollbar__wrap {
     overflow-x: hidden;
   }

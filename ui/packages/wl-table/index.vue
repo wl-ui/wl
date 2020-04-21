@@ -1,142 +1,121 @@
 <template>
-  <div class="ft-table">
-    <!-- table表格 -->
-    <el-table
-      border
-      fitstripe
-      class="ld-table"
-      ref="tableRef"
-      size="mini"
-      :data="data"
-      :height="height"
-      :span-method="spanMethod"
-      :sum-text="sumText"
-      :show-summary="showSummary"
-      :row-class-name="rowClassName"
-      :summary-method="summaryMethod"
-      :cell-class-name="cellClassName"
-      :highlight-current-row="highlightCurrentRow"
-      :header-row-class-name="selfHeaderRowClassName"
-      :load="load"
-      :lazy="lazy"
-      :row-key="rowKey"
-      :tree-props="treeProps"
-      :default-expand-all="defaultExpandAll"
-      @selection-change="selectionChange"
-      @row-dblclick="rowdblClick"
-      @row-click="handleRowClick"
-      @select="select"
-      :row-style="rowStyle"
-      :cell-style="cellStyle"
-    >
-      <!-- 选择框CheckBox列 -->
+  <el-table
+    border
+    fitstripe
+    class="wl-table"
+    ref="tableRef"
+    size="mini"
+    :data="data"
+    :height="height"
+    :span-method="spanMethod"
+    :sum-text="sumText"
+    :show-summary="showSummary"
+    :row-class-name="rowClassName"
+    :summary-method="summaryMethod"
+    :cell-class-name="cellClassName"
+    :highlight-current-row="highlightCurrentRow"
+    :header-row-class-name="selfHeaderRowClassName"
+    :load="load"
+    :lazy="lazy"
+    :row-key="rowKey"
+    :tree-props="treeProps"
+    :default-expand-all="defaultExpandAll"
+    @selection-change="selectionChange"
+    @row-dblclick="rowdblClick"
+    @row-click="handleRowClick"
+    @select="select"
+    :row-style="rowStyle"
+    :cell-style="cellStyle"
+  >
+    <!-- 选择框CheckBox列 -->
+    <el-table-column
+      v-if="hasCheck"
+      align="center"
+      type="selection"
+      width="50"
+      :selectable="selectable"
+    ></el-table-column>
+    <!-- 序号index列 -->
+    <el-table-column
+      v-if="hasIndex"
+      label="序号"
+      align="center"
+      type="index"
+      width="50"
+      :show-overflow-tooltip="true"
+      :index="indexFormat"
+    ></el-table-column>
+    <!-- 列配置 -->
+    <template v-for="column in columns">
       <el-table-column
-        v-if="hasCheck"
-        align="center"
-        type="selection"
-        width="50"
-        :selectable="selectable"
-      ></el-table-column>
-      <!-- 序号index列 -->
+        v-if="column.slot"
+        :key="column.prop"
+        :type="column.type"
+        :column-key="column.columnKey"
+        :label="column.label"
+        :prop="column.prop"
+        :width="column.width"
+        :min-width="column.minWidth"
+        :fixed="column.fixed"
+        :render-header="column.renderHeader"
+        :sortable="column.sortable"
+        :sort-method="column.sortMethod"
+        :sort-by="column.sortBy"
+        :sort-orders="column.sortOrders"
+        :resizable="column.resizable"
+        :formatter="column.formatter"
+        :show-overflow-tooltip="column.showOverflowTooltip"
+        :align="column.align"
+        :header-align="column.headerAlign"
+        :class-name="column.className"
+        :label-class-name="column.labelClassName"
+        :selectable="column.selectable"
+        :reserve-selection="column.reserveSelection"
+        :filters="column.filters"
+        :filter-placement="column.filterPlacement"
+        :filter-multiple="column.filterMultiple"
+        :filter-method="column.filterMethod"
+        :filtered-value="column.filteredValue"
+      >
+        <template slot-scope="scope">
+          <slot :name="column.prop" :row="scope.row" :index="scope.$index"></slot>
+        </template>
+      </el-table-column>
       <el-table-column
-        v-if="hasIndex"
-        label="序号"
-        align="center"
-        type="index"
-        width="50"
-        :show-overflow-tooltip="true"
-        :index="indexFormat"
+        v-else
+        :key="column.prop"
+        :column-key="column.columnKey"
+        :label="column.label"
+        :prop="column.prop"
+        :width="column.width"
+        :min-width="column.minWidth"
+        :fixed="column.fixed"
+        :render-header="column.renderHeader"
+        :sortable="column.sortable"
+        :sort-method="column.sortMethod"
+        :sort-by="column.sortBy"
+        :sort-orders="column.sortOrders"
+        :resizable="column.resizable"
+        :formatter="column.formatter"
+        :show-overflow-tooltip="column.showOverflowTooltip"
+        :align="column.align || 'center'"
+        :header-align="column.headerAlign"
+        :class-name="column.className"
+        :label-class-name="column.labelClassName"
+        :selectable="column.selectable"
+        :reserve-selection="column.reserveSelection"
+        :filters="column.filters"
+        :filter-placement="column.filterPlacement"
+        :filter-multiple="column.filterMultiple"
+        :filter-method="column.filterMethod"
+        :filtered-value="column.filteredValue"
       ></el-table-column>
-      <!-- 列配置 -->
-      <template v-for="column in columns">
-        <el-table-column
-          v-if="column.slot"
-          :key="column.prop"
-          :type="column.type"
-          :column-key="column.columnKey"
-          :label="column.label"
-          :prop="column.prop"
-          :width="column.width"
-          :min-width="column.minWidth"
-          :fixed="column.fixed"
-          :render-header="column.renderHeader"
-          :sortable="column.sortable"
-          :sort-method="column.sortMethod"
-          :sort-by="column.sortBy"
-          :sort-orders="column.sortOrders"
-          :resizable="column.resizable"
-          :formatter="column.formatter"
-          :show-overflow-tooltip="column.showOverflowTooltip"
-          :align="column.align"
-          :header-align="column.headerAlign"
-          :class-name="column.className"
-          :label-class-name="column.labelClassName"
-          :selectable="column.selectable"
-          :reserve-selection="column.reserveSelection"
-          :filters="column.filters"
-          :filter-placement="column.filterPlacement"
-          :filter-multiple="column.filterMultiple"
-          :filter-method="column.filterMethod"
-          :filtered-value="column.filteredValue"
-        >
-          <template slot-scope="scope">
-            <slot :name="column.prop" :row="scope.row" :index="scope.$index"></slot>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else
-          :key="column.prop"
-          :column-key="column.columnKey"
-          :label="column.label"
-          :prop="column.prop"
-          :width="column.width"
-          :min-width="column.minWidth"
-          :fixed="column.fixed"
-          :render-header="column.renderHeader"
-          :sortable="column.sortable"
-          :sort-method="column.sortMethod"
-          :sort-by="column.sortBy"
-          :sort-orders="column.sortOrders"
-          :resizable="column.resizable"
-          :formatter="column.formatter"
-          :show-overflow-tooltip="column.showOverflowTooltip"
-          :align="column.align || 'center'"
-          :header-align="column.headerAlign"
-          :class-name="column.className"
-          :label-class-name="column.labelClassName"
-          :selectable="column.selectable"
-          :reserve-selection="column.reserveSelection"
-          :filters="column.filters"
-          :filter-placement="column.filterPlacement"
-          :filter-multiple="column.filterMultiple"
-          :filter-method="column.filterMethod"
-          :filtered-value="column.filteredValue"
-        ></el-table-column>
-      </template>
-    </el-table>
-    <!-- 分页 -->
-    <div v-if="pagination" class="pagination-container">
-      <el-pagination
-        background
-        hide-on-single-page
-        layout="total, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageNum"
-        :page-sizes="pageSizes"
-        :page-size="pageSize"
-        :total="total"
-      ></el-pagination>
-    </div>
-    <div class="clearfix"></div>
-  </div>
+    </template>
+  </el-table>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-import { localSet, localGet } from "@/library/js/storage";
-
 export default {
-  name: "FtTable",
+  name: "wl-table",
   data() {
     return {
       // activeRow: {}, // 当前选中行
@@ -208,6 +187,8 @@ export default {
       type: Boolean,
       default: true
     },
+    // 自定义序号格式化方法
+    indexFormat: Function,
     // 行数据的 Key，用来优化 Table 的渲染
     rowKey: {
       type: String,
@@ -253,24 +234,6 @@ export default {
       type: Boolean,
       default: true
     },
-    //表格数据总条数
-    total: {
-      type: Number,
-      default: 0
-    },
-    //当前页数
-    pageNum: {
-      type: Number,
-      default: 1
-    },
-    //每页显示几条数据
-    pageSize: {
-      type: Number,
-      default: function() {
-        return this.PAGESIZE;
-      }
-    },
-    pageSizes: Array,
     //自定义的某行是否可以勾选
     selectable: {
       type: Function,
@@ -299,9 +262,8 @@ export default {
   },
   computed: {
     selfHeaderRowClassName() {
-      return `ft-thead ${this.headerRowClassName || ""}`;
-    },
-    ...mapGetters({ PAGESIZE: "size" })
+      return `wl-thead ${this.headerRowClassName || ""}`;
+    }
   },
   watch: {
     defaultChecked(val) {
@@ -309,10 +271,6 @@ export default {
     }
   },
   created() {
-    let localPageSize = localGet("pageSize");
-    if (localPageSize) {
-      this.setPageSize(localPageSize);
-    }
     this.setDefaultCheck(this.defaultChecked);
   },
   methods: {
@@ -321,18 +279,6 @@ export default {
       if (column.type != "index" && column.type != "selection") {
         this.$emit("cellClick", row, column, cell, event);
       }
-    },
-    //每页条数change
-    handleSizeChange(size) {
-      this.$emit("size-change", size);
-      this.$refs["tableRef"].bodyWrapper.scrollTop = 0;
-      this.setPageSize(size);
-      localSet("pageSize", size);
-    },
-    //当前页数change
-    handleCurrentChange(currentPage) {
-      this.$emit("current-change", currentPage);
-      this.$refs["tableRef"].bodyWrapper.scrollTop = 0;
     },
     //当用户手动勾选数据行的 Checkbox 时触发的事件， 注意会多输出一个字段表示是选中还是取消选中
     select(selection, row) {
@@ -362,14 +308,6 @@ export default {
       }
       this.$emit("row-click", row);
       this.rowClick && this.rowClick();
-    },
-    //index序号格式化
-    indexFormat(index) {
-      if (this.pagination && this.pageNum && this.pageSize) {
-        return (this.pageNum - 1) * this.pageSize + (index + 1);
-      } else {
-        return index + 1;
-      }
     },
     // 默认选中
     setDefaultCheck(val) {
@@ -433,21 +371,18 @@ export default {
         id,
         _new_children
       );
-    },
-    // 导入vuex action函数
-    ...mapActions("app", ["setPageSize"])
+    }
   }
 };
 </script>
 <style lang="scss">
-.ft-table .el-table {
+.wl-table.el-table {
   font-size: 14px;
 }
-.ft-thead > th {
+.wl-thead > th {
   background: #f5f7fa;
   color: #333;
   text-align: center;
-  // font-weight: 600;
 }
 .pagination-container {
   margin-top: 8px;

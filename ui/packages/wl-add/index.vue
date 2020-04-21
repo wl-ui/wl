@@ -6,14 +6,8 @@
 </template>
 
 <script>
-/**
- * fndbs1314 update 2020/3/16
- * 增加icon属性
- */
-import { throttle } from "lodash";
-
 export default {
-  name: "ft-add",
+  name: "wl-add",
   props: {
     // loading管理
     loading: {
@@ -31,9 +25,9 @@ export default {
     }
   },
   methods: {
-    submitAdd: throttle(function() {
+    submitAdd() {
       this.$emit("click");
-    }, 2000)
+    }
   }
 };
 </script>

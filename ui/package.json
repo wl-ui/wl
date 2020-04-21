@@ -1,10 +1,10 @@
 {
-  "name": "wl-http",
+  "name": "wl-ui",
   "version": "1.0.0",
   "description": "wlui库 基础ui库",
   "main": "dist/wlui.common.js",
   "scripts": {
-    "build": "vue-cli-service build --target dist --name wlui --dest dist ./packages/index.js",
+    "build": "vue-cli-service build --target lib --name wlui --dest dist ./packages/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -37,6 +37,21 @@
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
+    "element-ui": "^2.13.1",
     "vue": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
   }
 }
