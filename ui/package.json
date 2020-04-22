@@ -1,45 +1,24 @@
 {
-  "name": "wl-ui",
-  "version": "1.0.0",
-  "description": "wlui库 基础ui库",
-  "main": "dist/wlui.common.js",
+  "name": "ui",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build": "vue-cli-service build --target lib --name wlui --dest dist ./packages/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/wl-ui/wl.git"
-  },
-  "keywords": [
-    "wl-ui",
-    "wlui",
-    "elementUi",
-    "vue"
-  ],
-  "author": "weilan <17796646068@163.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/wl-ui/wl/issues"
-  },
-  "homepage": "https://github.com/wl-ui/wl#readme",
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.0",
-    "@vue/cli-plugin-eslint": "^3.12.0",
-    "@vue/cli-service": "^3.12.0",
-    "babel-eslint": "^10.0.3",
-    "babel-plugin-component": "^1.1.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.13.0",
-    "sass-loader": "^7.3.1",
-    "vue-cli-plugin-element": "^1.0.1",
-    "vue-template-compiler": "^2.6.10"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "element-ui": "^2.13.1",
-    "vue": "^2.6.11",
-    "wl-core": "^1.0.0"
+    "core-js": "^3.6.4",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.3.0",
+    "@vue/cli-plugin-eslint": "^4.3.0",
+    "@vue/cli-service": "^4.3.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
@@ -50,9 +29,14 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
-    }
-  }
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

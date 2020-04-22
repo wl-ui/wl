@@ -22,7 +22,7 @@
  * @param placeholder placeholder
  * @emits change 选择改变
  */
-import { isNum } from "wl-code"; // 导入自带校验规则
+import { isNum } from "wl-core"; // 导入自带校验规则
 
 export default {
   name: "wl-input",
