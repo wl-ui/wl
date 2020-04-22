@@ -1,14 +1,14 @@
 
-import WlContainer from "./wl-container";
-import WlContextmenu from "./wl-contextmenu";
-import WlTable from "./wl-table";
-import WlScroll from "./wl-scroll";
-import WlAdd from "./wl-add";
-import WlFadein from "./wl-fadein";
-import WlTableReport from "./wl-table-report";
-import WlInput from "./wl-input";
+import Container from "./container";
+import ContextMenu from "./context-menu";
+import Table from "./table";
+import Scroll from "./scroll";
+import Add from "./add";
+import FadeIn from "./fade-in";
+import TableDynamic from "./table-dynamic";
+import Input from "./input";
 
-const components = [WlContainer, WlContextmenu, WlTable, WlScroll, WlAdd, WlFadein, WlTableReport, WlInput];
+const components = [Container, ContextMenu, Table, Scroll, Add, FadeIn, TableDynamic, Input];
 
 
 const install = function (Vue) {
@@ -23,12 +23,12 @@ if (typeof window !== "undefined" && window.Vue) {
 
 export default {
   install,
-  WlContainer,
-  WlContextmenu,
-  WlTable,
-  WlScroll,
-  WlAdd,
-  WlFadein,
-  WlTableReport,
-  WlInput
+  Container,
+  ContextMenu,
+  Table,
+  Scroll,
+  Add,
+  FadeIn,
+  TableDynamic,
+  Input
 };

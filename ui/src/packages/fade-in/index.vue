@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "wl-fadein",
+  name: "wl-fade-in",
   props: {
     // 是否显示
     show: {
@@ -46,9 +46,9 @@ export default {
   flex-grow: 1;
   flex-shrink: 1;
   position: fixed;
-  top: $header_height + $main_body_padding;
-  bottom: $main_body_padding;
-  right: $main_body_padding;
+  top: $header-height + $main-body-padding;
+  bottom: $main-body-padding;
+  right: $main-body-padding;
   z-index: 9;
   width: 460px;
   background: #fff;

@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'wl-contextmenu',
+  name: 'wl-context-menu',
   props: {
     visible: {
       type: Boolean,

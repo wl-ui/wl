@@ -1,4 +1,6 @@
-# ui
+# wl-baseui
+
+基础ui库，不包含负责组件，完整组件库见wlui
 
 ## Project setup
 ```

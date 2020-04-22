@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { Event } from "wl-core";
+import { throttle } from "wl-core";
 
 export default {
   name: "wl-add",
@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    submitAdd: Event.throttle(function() {
+    submitAdd: throttle(function() {
       this.$emit("click");
     }, 1000)
   }
