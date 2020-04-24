@@ -1,5 +1,11 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports._vueOptions = exports._routeGuardOptions = exports._menuDataOptions = void 0;
 // 菜单数据字段配置项
-const _menuDataOptions = {
+var _menuDataOptions = {
   url: 'url',
   // 前端地址栏路由 将映射真实文件路径 映射规则：import(`@/views${url}/index.vue`)
   name: 'routerName',
@@ -12,7 +18,8 @@ const _menuDataOptions = {
   // 按钮权限字段
   path404: 'error/404'
 };
-const _routeGuardOptions = {
+exports._menuDataOptions = _menuDataOptions;
+var _routeGuardOptions = {
   tokenKey: 'token',
   // 存储在local中的token的key
   dispatchSetToken: 'app/setToken',
@@ -31,7 +38,8 @@ const _routeGuardOptions = {
 
 }; // 实例化vue配置项
 
-const _vueOptions = {
+exports._routeGuardOptions = _routeGuardOptions;
+var _vueOptions = {
   mount: '#app'
 };
-export { _menuDataOptions, _routeGuardOptions, _vueOptions };
+exports._vueOptions = _vueOptions;

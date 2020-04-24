@@ -1,18 +1,28 @@
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _dayjs = _interopRequireDefault(require("dayjs"));
+
 /**
  * @author weilan
  * @time 2020.04.22
  * @description 时间操作类filter
  */
-import dayjs from "dayjs";
+
 /**
  * 日期格式化
  * @param {*} date 
  */
-
-const dateFormat = {
+var dateFormat = {
   name: 'date',
-  rule: date => {
-    return date ? dayjs(date).format('YYYY-MM-DD') : null;
+  rule: function rule(date) {
+    return date ? (0, _dayjs["default"])(date).format('YYYY-MM-DD') : null;
   }
 };
 /**
@@ -20,10 +30,11 @@ const dateFormat = {
  * @param {*} dateTime
  */
 
-const dateTimeFormat = {
+var dateTimeFormat = {
   name: 'dateTime',
-  rule: date => {
-    return date ? dayjs(date).format('YYYY-MM-DD HH:mm:ss') : null;
+  rule: function rule(date) {
+    return date ? (0, _dayjs["default"])(date).format('YYYY-MM-DD HH:mm:ss') : null;
   }
 };
-export default [dateFormat, dateTimeFormat];
+var _default = [dateFormat, dateTimeFormat];
+exports["default"] = _default;

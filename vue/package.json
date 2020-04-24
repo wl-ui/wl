@@ -1,6 +1,6 @@
 {
   "name": "wl-vue",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "vue基础库",
   "main": "dist/index.js",
   "scripts": {
@@ -14,8 +14,12 @@
   "keywords": [
     "vue",
     "wl-vue",
-    "基础库",
-    "permissions"
+    "auth",
+    "filters",
+    "directives",
+    "render",
+    "permissions",
+    "基础库"
   ],
   "author": "weilan <17796646068@163.com>",
   "license": "ISC",

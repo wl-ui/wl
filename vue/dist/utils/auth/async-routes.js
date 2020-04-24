@@ -1,10 +1,26 @@
-/**
- * @author weilan
- * @time 2020.03.09
- * @description 整理需要登录后异步推入的路由
- */
-import { flattenDeep, DataType } from "wl-core";
-import { _menuDataOptions } from "../../config/settins";
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _interopRequireWildcard2 = _interopRequireDefault(require("@babel/runtime/helpers/interopRequireWildcard"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _wlCore = require("wl-core");
+
+var _settins = require("../../config/settins");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * 异步推入鉴权路由 要求必须存在@/views/layout/index.vue主体视图盒子和/index首页路径
  * @param {Array} data 菜单数据
@@ -18,61 +34,69 @@ import { _menuDataOptions } from "../../config/settins";
  * @description path404: 'error/404' // 404路径
  * @returns {Object} {routes: 整理好的异步路由router.addRoutes()即可, permissions: 权限code码}
  */
+var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
+  if (!_wlCore.DataType.isObject(options)) throw Error('options 必须是一个对象！');
 
-const asyncRoutes = (data, nextRoutes, options) => {
-  if (!DataType.isObject(options)) throw Error('options 必须是一个对象！');
-  let _options = { ..._menuDataOptions,
-    ...options
-  }; // 主视图路由
+  var _options = _objectSpread({}, _settins._menuDataOptions, {}, options); // 主视图路由
 
-  let userRouter = {
+
+  var userRouter = {
     path: "/layout",
     name: "layout",
-    component: () => import('@/views/layout/index.vue'),
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return (0, _interopRequireWildcard2["default"])(require('@/views/layout/index.vue'));
+      });
+    },
     redirect: '/index',
     children: []
   }; // 创建路由盒子
 
-  let routerBox = []; // 创建权限码数组
+  var routerBox = []; // 创建权限码数组
 
-  let permissions = []; // 将菜单数据处理为一维函数
+  var permissions = []; // 将菜单数据处理为一维函数
 
-  let menu = flattenDeep(data, _options.children); // 遍历处理路由 
+  var menu = (0, _wlCore.flattenDeep)(data, _options.children); // 遍历处理路由 
 
-  menu.forEach(item => {
-    let _url = item[_options.url];
+  menu.forEach(function (item) {
+    var _url = item[_options.url];
     if (!_url) return;
 
     try {
-      let routerItem = {
+      var routerItem = {
         path: _url,
         // 路由路径名
         name: item[_options.name],
         // 命名路由 用于配合菜单简洁跳转
         meta: item[_options.meta],
         // 路由元信息 定义路由时即可携带的参数，可用来管理每个路由的按钮操作权限
-        component: () => import(`@/views${_url}/index.vue`) // 路由映射真实视图路径
+        component: function component() {
+          return Promise.resolve("@/views".concat(_url, "/index.vue")).then(function (s) {
+            return (0, _interopRequireWildcard2["default"])(require(s));
+          });
+        } // 路由映射真实视图路径
 
       }; // 将所有权限码收集存入store
 
-      let _permissions = item[_options.permissions];
-      if (DataType.isArray(_permissions)) permissions.push(_permissions);
+      var _permissions = item[_options.permissions];
+      if (_wlCore.DataType.isArray(_permissions)) permissions.push(_permissions);
       routerBox.push(routerItem);
     } catch (err) {
       throw Error('路由映射规则为：@/views${url}/index.vue', err);
     }
   }); // 推入需要异步加载的，非服务端获取的功能性页面
 
-  routerBox.push(...nextRoutes);
+  routerBox.push.apply(routerBox, (0, _toConsumableArray2["default"])(nextRoutes));
   userRouter.children = routerBox;
-  let errorBox = {
+  var errorBox = {
     path: "*",
     redirect: _options.path404
   };
   return {
     routes: [userRouter, errorBox],
-    permissions
+    permissions: permissions
   };
 };
 
-export default asyncRoutes;
+var _default = asyncRoutes;
+exports["default"] = _default;

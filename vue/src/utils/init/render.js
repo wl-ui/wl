@@ -14,7 +14,6 @@ import { DataType } from "wl-core"
  * @desc {Object} 必须 root 当前应用的根组件 一般是app.vue
  * @desc {Object} 必须 router router实例
  * @desc {Object} 必须 store store实例
- * @desc {Object} 必须 store store实例
  * @desc {Object}  options 实例化vue配置项 下为详细注解
  * @description fastclick 默认false 是否启用移动端快速点击插件
  * @description cookie 默认false 是否启用cookie操作插件
@@ -42,6 +41,7 @@ import { DataType } from "wl-core"
  * @description path404: 'error/404' // 404路径
  * @desc nextRoutes 需要登录后插入的 非后台返回的 路由列表
  * @param {String} mount 默认#app 要挂载的dom节点id
+ * @returns vm 初始化后的vue实例
  */
 const render = ({ root, router, store, options = {}, routeOptions = {}, menuOptions = {}, nextRoutes = [] } = {}, mount = _vueOptions.mount) => {
   // 检查必要条件
@@ -77,11 +77,12 @@ const render = ({ root, router, store, options = {}, routeOptions = {}, menuOpti
   // 执行鉴权系统
   auth && registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes);
   // 实例化vue
-  new Vue({
+  const vm = new Vue({
     router,
     store,
     render: h => h(root)
   }).$mount(mount);
+  return vm;
 }
 
 export default render;

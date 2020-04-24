@@ -1,18 +1,37 @@
-import Vue from 'vue';
-import FastClick from 'fastclick'; // 移动端click事件解决方案
+"use strict";
 
-import VueCookie from 'vue-cookie'; // cookie操作库
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-import VueLazyLoad from 'vue-lazyload'; // 图片懒加载库
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
 
-import selfFilters from '../filters'; // 导入默认过滤器
+var _vue = _interopRequireDefault(require("vue"));
 
-import selfDirectives from '../directives'; // 导入默认指令
+var _fastclick = _interopRequireDefault(require("fastclick"));
 
-import registerRouteGuard from "../auth"; // 导入鉴权系统
+var _vueCookie = _interopRequireDefault(require("vue-cookie"));
 
-import { _vueOptions } from "../../config/settins";
-import { DataType } from "wl-core";
+var _vueLazyload = _interopRequireDefault(require("vue-lazyload"));
+
+var _filters2 = _interopRequireDefault(require("../filters"));
+
+var _directives2 = _interopRequireDefault(require("../directives"));
+
+var _auth = _interopRequireDefault(require("../auth"));
+
+var _settins = require("../../config/settins");
+
+var _wlCore = require("wl-core");
+
+// 移动端click事件解决方案
+// cookie操作库
+// 图片懒加载库
+// 导入默认过滤器
+// 导入默认指令
+// 导入鉴权系统
+
 /**
  * vue 实例化函数
  * @param {Object} param0 配置项 下为详细注解 
@@ -28,6 +47,7 @@ import { DataType } from "wl-core";
  * @description directives 默认[] 指令数组 格式为 {name:"", rule: ()=>{}}
  * @description plugins 默认[] 插件数组 [wlui, el-input] 可以直接Vue.use()的插件数组
  * @description fncBeforeVue 实例化vue前可执行的回调函数 fncBeforeVue(vue){... 你的逻辑}
+ * @description auth 是否需要鉴权系统，如果不需要，后续参数无需再传
  * @desc {Object}  routeOptions 路由守卫配置项 下为详细注解
  * @description tokenKey: 'token', // 存储在local中的token的key
  * @description dispatchSetToken: 'app/setToken', // store设置token的actions命名空间
@@ -46,70 +66,92 @@ import { DataType } from "wl-core";
  * @description path404: 'error/404' // 404路径
  * @desc nextRoutes 需要登录后插入的 非后台返回的 路由列表
  * @param {String} mount 默认#app 要挂载的dom节点id
+ * @returns vm 初始化后的vue实例
  */
+var render = function render() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      root = _ref.root,
+      router = _ref.router,
+      store = _ref.store,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {} : _ref$options,
+      _ref$routeOptions = _ref.routeOptions,
+      routeOptions = _ref$routeOptions === void 0 ? {} : _ref$routeOptions,
+      _ref$menuOptions = _ref.menuOptions,
+      menuOptions = _ref$menuOptions === void 0 ? {} : _ref$menuOptions,
+      _ref$nextRoutes = _ref.nextRoutes,
+      nextRoutes = _ref$nextRoutes === void 0 ? [] : _ref$nextRoutes;
 
-const render = ({
-  root,
-  router,
-  store,
-  options = {},
-  routeOptions = {},
-  menuOptions = {},
-  nextRoutes = []
-} = {}, mount = _vueOptions.mount) => {
+  var mount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settins._vueOptions.mount;
+
   // 检查必要条件
   if (!root || !router || !store) {
     throw Error('创建vue实例至少需要有{root, router, store}字段');
   } // 检查 render 配置项是否是对象格式
 
 
-  if (!DataType.isObject(options)) {
+  if (!_wlCore.DataType.isObject(options)) {
     throw Error('options必须是对象格式');
   } // 提取render配置参数
 
 
-  const {
-    fastclick = false,
-    cookie = false,
-    lazyOptions,
-    plugins = [],
-    filters = [],
-    directives = [],
-    fncBeforeVue
-  } = options; // 检查指令和过滤器格式
+  var _options$fastclick = options.fastclick,
+      fastclick = _options$fastclick === void 0 ? false : _options$fastclick,
+      _options$cookie = options.cookie,
+      cookie = _options$cookie === void 0 ? false : _options$cookie,
+      _options$auth = options.auth,
+      auth = _options$auth === void 0 ? true : _options$auth,
+      lazyOptions = options.lazyOptions,
+      _options$plugins = options.plugins,
+      plugins = _options$plugins === void 0 ? [] : _options$plugins,
+      _options$filters = options.filters,
+      filters = _options$filters === void 0 ? [] : _options$filters,
+      _options$directives = options.directives,
+      directives = _options$directives === void 0 ? [] : _options$directives,
+      fncBeforeVue = options.fncBeforeVue; // 检查指令和过滤器格式
 
-  if (!DataType.isArray(filters) || !DataType.isArray(directives) || !DataType.isArray(plugins)) {
+  if (!_wlCore.DataType.isArray(filters) || !_wlCore.DataType.isArray(directives) || !_wlCore.DataType.isArray(plugins)) {
     console.error('filters、directives、plugins需要是数组格式！');
   } // 为Vue注册全局过滤器
 
 
-  let _filters = selfFilters.concat(filters);
+  var _filters = _filters2["default"].concat(filters);
 
-  _filters.map(item => Vue.filter(item.name, item.rule)); // 为Vue注册全局指令
-
-
-  let _directives = selfDirectives.concat(directives);
-
-  _directives.map(item => Vue.directive(item.name, item.rule)); // 为Vue注册全局组件
+  _filters.map(function (item) {
+    return _vue["default"].filter(item.name, item.rule);
+  }); // 为Vue注册全局指令
 
 
-  plugins.map(item => Vue.use(item)); // 解决移动端的300ms延迟问题(默认不启用)
+  var _directives = _directives2["default"].concat(directives);
 
-  fastclick && FastClick.attach(document.body); // 是否使用VueCookie(默认不启用)
+  _directives.map(function (item) {
+    return _vue["default"].directive(item.name, item.rule);
+  }); // 为Vue注册全局组件
 
-  cookie && Vue.use(VueCookie); // 启动图片懒加载(默认不启用)
 
-  DataType.isObject(lazyOptions) && Vue.use(VueLazyLoad, lazyOptions); // 在实例化vue前 可传入回调函数自定义逻辑
+  plugins.map(function (item) {
+    return _vue["default"].use(item);
+  }); // 解决移动端的300ms延迟问题(默认不启用)
 
-  fncBeforeVue && fncBeforeVue(Vue); // 执行鉴权系统
+  fastclick && _fastclick["default"].attach(document.body); // 是否使用VueCookie(默认不启用)
 
-  registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes); // 实例化vue
+  cookie && _vue["default"].use(_vueCookie["default"]); // 启动图片懒加载(默认不启用)
 
-  new Vue({
-    router,
-    store,
-    render: h => h(root)
+  _wlCore.DataType.isObject(lazyOptions) && _vue["default"].use(_vueLazyload["default"], lazyOptions); // 在实例化vue前 可传入回调函数自定义逻辑
+
+  fncBeforeVue && fncBeforeVue(_vue["default"]); // 执行鉴权系统
+
+  auth && (0, _auth["default"])(router, store, routeOptions, menuOptions, nextRoutes); // 实例化vue
+
+  var vm = new _vue["default"]({
+    router: router,
+    store: store,
+    render: function render(h) {
+      return h(root);
+    }
   }).$mount(mount);
+  return vm;
 };
 
-export default render;
+var _default = render;
+exports["default"] = _default;

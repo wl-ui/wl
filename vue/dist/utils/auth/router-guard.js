@@ -1,13 +1,27 @@
-/**
- * auth：weilan
- * time: 2020.03.09
- * 鉴权路由守卫
- */
-import { Storage } from "wl-core";
-import VaUserAuth from "./va-auth";
-import asyncRoutes from './add-routes'; // 导入异步插入路由函数
+"use strict";
 
-import { _routeGuardOptions } from "../../config/settins"; // 路由守卫配置项
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _wlCore = require("wl-core");
+
+var _vaAuth = _interopRequireDefault(require("./va-auth"));
+
+var _addRoutes = _interopRequireDefault(require("./add-routes"));
+
+var _settins = require("../../config/settins");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+// 路由守卫配置项
 
 /**
  * 注册路由守卫
@@ -25,22 +39,23 @@ import { _routeGuardOptions } from "../../config/settins"; // 路由守卫配置
  * @param {*} menuOptions 菜单数据解析为路由数据配置项
  * @param {*} nextRoutes 需要登录后插入的 非后台返回的 路由列表
  */
-
-const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes) => {
+var registerRouteGuard = function registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes) {
   if (!DataType.isObject(routeOptions)) throw Error('routeOptions 必须是一个对象！');
-  let _option = { ..._routeGuardOptions,
-    ...routeOptions
-  };
-  router.beforeEach((to, from, next) => {
+
+  var _option = _objectSpread({}, _settins._routeGuardOptions, {}, routeOptions);
+
+  router.beforeEach(function (to, from, next) {
     // 检查是否存在登录状态
-    let _jwt = Storage.get(tokenKey, 'local'); // 存在登陆状态
+    var _jwt = _wlCore.Storage.get(tokenKey, 'local'); // 存在登陆状态
 
 
     if (_jwt && _jwt != 'undefined') {
       // 第一次打开页面token过期进入登陆页
-      if (VaUserAuth.vaJwtExpired(_jwt, _option.vaJwtExpiredFn)) {
+      if (_vaAuth["default"].vaJwtExpired(_jwt, _option.vaJwtExpiredFn)) {
         store.dispatch(_option.dispatchSetToken, '');
-        Storage.del(tokenKey, 'local');
+
+        _wlCore.Storage.del(tokenKey, 'local');
+
         next({
           path: _option.pathLogin
         });
@@ -51,25 +66,25 @@ const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes
       store.dispatch(_option.dispatchSetToken, _jwt); // 判断当前用户是否已拉取权限菜单
 
       if (store.getters.menu.length === 0) {
-        getPermsApi().then(({
-          data
-        }) => {
-          let _menu = data.data || [];
+        getPermsApi().then(function (_ref) {
+          var data = _ref.data;
 
-          let {
-            routes,
-            permissions
-          } = asyncRoutes(_menu, nextRoutes, menuOptions);
+          var _menu = data.data || [];
+
+          var _asyncRoutes = (0, _addRoutes["default"])(_menu, nextRoutes, menuOptions),
+              routes = _asyncRoutes.routes,
+              permissions = _asyncRoutes.permissions;
+
           router.addRoutes(routes); // 推入异步路由
 
           store.dispatch(_option.dispatchSetMenu, _menu); // 将菜单数据存入store
 
           store.dispatch(_option.dispatchSetPermissions, permissions); // 将权限码数据存入store
 
-          next({ ...to,
+          next(_objectSpread({}, to, {
             replace: true
-          });
-        }).catch();
+          }));
+        })["catch"]();
         return;
       } // 已登录状态 去往登录页时自动重定向至配置页 其他跳转正常进行
 
@@ -85,4 +100,5 @@ const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes
   });
 };
 
-export default registerRouteGuard;
+var _default = registerRouteGuard;
+exports["default"] = _default;
