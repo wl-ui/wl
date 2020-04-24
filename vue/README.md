@@ -47,11 +47,12 @@ const options = {
 const mount = "#app"; // 非必选 vue挂载dom 默认为#app
 
 // 实例化vue
-render(options, mount);
+export default vueRender() => render(options, mount);
 ```
+
 ### 2. 在main.js内注册：main.js
 ```js
-import "render.js"
+import vueRender from "render.js"
 ```
 
 ### 3. 注意事项
