@@ -40,7 +40,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  * @param {*} nextRoutes 需要登录后插入的 非后台返回的 路由列表
  */
 var registerRouteGuard = function registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes) {
-  if (!DataType.isObject(routeOptions)) throw Error('routeOptions 必须是一个对象！');
+  if (!_wlCore.DataType.isObject(routeOptions)) throw Error('routeOptions 必须是一个对象！');
 
   var _option = _objectSpread({}, _settins._routeGuardOptions, {}, routeOptions);
 

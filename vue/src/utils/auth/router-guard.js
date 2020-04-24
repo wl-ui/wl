@@ -3,7 +3,7 @@
  * time: 2020.03.09
  * 鉴权路由守卫
  */
-import { Storage } from "wl-core"
+import { Storage, DataType } from "wl-core"
 import VaUserAuth from "./va-auth"
 import asyncRoutes from './async-routes'; // 导入异步插入路由函数
 import { _routeGuardOptions } from "../../config/settins"; // 路由守卫配置项
