@@ -13,7 +13,7 @@ var _wlCore = require("wl-core");
 
 var _vaAuth = _interopRequireDefault(require("./va-auth"));
 
-var _addRoutes = _interopRequireDefault(require("./add-routes"));
+var _asyncRoutes2 = _interopRequireDefault(require("./async-routes"));
 
 var _settins = require("../../config/settins");
 
@@ -34,7 +34,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  * @description dispatchSetPermissions: 'menu/setPermissions', // store设置按钮权限码的actions命名空间
  * @description pathLogin: '/login', // 登录页的 router path
  * @description pathLogged: '/index', // 已登录后 再进登录页要重定向的 router path
- * @description apiFn: 'getPermsApi', // 获取菜单数据的api函数
+ * @description apiFn: ()={}, // 获取菜单数据的api函数
  * @description vaJwtExpiredFn: 'vaJwtExpired', // 自定义校验jwt是否过期的函数
  * @param {*} menuOptions 菜单数据解析为路由数据配置项
  * @param {*} nextRoutes 需要登录后插入的 非后台返回的 路由列表
@@ -44,6 +44,7 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
 
   var _option = _objectSpread({}, _settins._routeGuardOptions, {}, routeOptions);
 
+  if (!(_option === null || _option === void 0 ? void 0 : _option.apiFn)) throw Error('apiFn lost！缺少获取菜单数据的api函数！');
   router.beforeEach(function (to, from, next) {
     // 检查是否存在登录状态
     var _jwt = _wlCore.Storage.get(tokenKey, 'local'); // 存在登陆状态
@@ -66,12 +67,12 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
       store.dispatch(_option.dispatchSetToken, _jwt); // 判断当前用户是否已拉取权限菜单
 
       if (store.getters.menu.length === 0) {
-        getPermsApi().then(function (_ref) {
+        _option.apiFn().then(function (_ref) {
           var data = _ref.data;
 
           var _menu = data.data || [];
 
-          var _asyncRoutes = (0, _addRoutes["default"])(_menu, nextRoutes, menuOptions),
+          var _asyncRoutes = (0, _asyncRoutes2["default"])(_menu, nextRoutes, menuOptions),
               routes = _asyncRoutes.routes,
               permissions = _asyncRoutes.permissions;
 
@@ -85,6 +86,7 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
             replace: true
           }));
         })["catch"]();
+
         return;
       } // 已登录状态 去往登录页时自动重定向至配置页 其他跳转正常进行
 

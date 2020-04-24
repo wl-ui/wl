@@ -9,7 +9,14 @@ module.exports = {
       errors: true
     },
   },
+  configureWebpack: {
+    externals: {
+      vue: "Vue",
+      'element-ui': 'Element',
+    }
+  },
   css: {
+    extract: false,
     loaderOptions: {
       sass: {
         prependData: `@import "./src/assets/css/variables.scss";`

@@ -31,7 +31,7 @@ const options = {
     dispatchSetPermissions: 'menu/setPermissions', // store设置按钮权限码的actions命名空间 默认'menu/setPermissions'
     pathLogin: '/login', // 登录页的 router path 默认'/login'
     pathLogged: '/index', // 已登录后 再进登录页时自动重定向的 router path 默认'/index'
-    apiFn: 'getPermsApi', // 获取菜单数据的api函数 默认getPermsApi
+    apiFn: ()=>{}, // **必须** 获取菜单数据的api函数，返回值为一个promise
     vaJwtExpiredFn: 'vaJwtExpired', // 自定义校验jwt是否过期的函数 默认为比较jwt携带过期时间与当前时间比较，单位秒，传入表示自定义过期规则
   },
   menuOptions:{ // 菜单数据解析为路由数据配置项 下为详细注解
@@ -47,7 +47,9 @@ const options = {
 const mount = "#app"; // 非必选 vue挂载dom 默认为#app
 
 // 实例化vue
-export default vueRender() => render(options, mount);
+const vueRender = () => render(options, mount);
+
+export default vueRender;
 ```
 
 ### 2. 在main.js内注册：main.js

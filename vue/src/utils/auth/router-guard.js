@@ -5,7 +5,7 @@
  */
 import { Storage } from "wl-core"
 import VaUserAuth from "./va-auth"
-import asyncRoutes from './add-routes'; // 导入异步插入路由函数
+import asyncRoutes from './async-routes'; // 导入异步插入路由函数
 import { _routeGuardOptions } from "../../config/settins"; // 路由守卫配置项
 
 /**
@@ -19,7 +19,7 @@ import { _routeGuardOptions } from "../../config/settins"; // 路由守卫配置
  * @description dispatchSetPermissions: 'menu/setPermissions', // store设置按钮权限码的actions命名空间
  * @description pathLogin: '/login', // 登录页的 router path
  * @description pathLogged: '/index', // 已登录后 再进登录页要重定向的 router path
- * @description apiFn: 'getPermsApi', // 获取菜单数据的api函数
+ * @description apiFn: ()={}, // 获取菜单数据的api函数
  * @description vaJwtExpiredFn: 'vaJwtExpired', // 自定义校验jwt是否过期的函数
  * @param {*} menuOptions 菜单数据解析为路由数据配置项
  * @param {*} nextRoutes 需要登录后插入的 非后台返回的 路由列表
@@ -27,6 +27,8 @@ import { _routeGuardOptions } from "../../config/settins"; // 路由守卫配置
 const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes) => {
   if (!DataType.isObject(routeOptions)) throw Error('routeOptions 必须是一个对象！');
   let _option = { ..._routeGuardOptions, ...routeOptions }
+  if (!_option?.apiFn) throw Error('apiFn lost！缺少获取菜单数据的api函数！');
+
   router.beforeEach((to, from, next) => {
     // 检查是否存在登录状态
     let _jwt = Storage.get(tokenKey, 'local');
@@ -45,7 +47,7 @@ const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes
       store.dispatch(_option.dispatchSetToken, _jwt)
       // 判断当前用户是否已拉取权限菜单
       if (store.getters.menu.length === 0) {
-        getPermsApi()
+        _option.apiFn()
           .then(({ data }) => {
             let _menu = data.data || [];
             let { routes, permissions } = asyncRoutes(_menu, nextRoutes, menuOptions)

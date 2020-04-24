@@ -1,6 +1,6 @@
 {
   "name": "wl-baseui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "repository": {
     "type": "git",
@@ -9,7 +9,9 @@
   "keywords": [
     "wl-ui",
     "wlui",
+    "wl-base-ui",
     "element-ui",
+    "base-ui",
     "vue",
     "ui"
   ],
@@ -19,10 +21,10 @@
     "url": "https://github.com/wl-ui/wl/issues"
   },
   "homepage": "https://github.com/wl-ui/wl#readme",
-  "main": "dist/wl-base-ui.common.js",
+  "main": "dist/wl-baseui.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name wl-base-ui --dest dist ./src/packages/index.js",
+    "build": "vue-cli-service build --target lib --name wl-baseui --dest dist ./src/packages/index.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

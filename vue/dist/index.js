@@ -8,16 +8,16 @@ Object.defineProperty(exports, "__esModule", {
 Object.defineProperty(exports, "render", {
   enumerable: true,
   get: function get() {
-    return _init["default"];
+    return _render["default"];
   }
 });
 Object.defineProperty(exports, "VaJwt", {
   enumerable: true,
   get: function get() {
-    return _auth["default"];
+    return _vaAuth["default"];
   }
 });
 
-var _init = _interopRequireDefault(require("./utils/init"));
+var _render = _interopRequireDefault(require("./utils/init/render"));
 
-var _auth = _interopRequireDefault(require("./utils/auth"));
+var _vaAuth = _interopRequireDefault(require("./utils/auth/va-auth"));
