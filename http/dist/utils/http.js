@@ -41,7 +41,14 @@ var Http = /*#__PURE__*/function () {
    * @param {Function} responseInterceptorSuccessCb 非必填 响应拦截器成功回调，必须返回一个response对象
    * @param {Function} responseInterceptorErrorCb 非必填 响应拦截器失败回调，必须返回一个response对象
    */
-  function Http(axios, options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb) {
+  function Http() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        axios = _ref.axios,
+        options = _ref.options,
+        requestInterceptorSuccessCb = _ref.requestInterceptorSuccessCb,
+        responseInterceptorSuccessCb = _ref.responseInterceptorSuccessCb,
+        responseInterceptorErrorCb = _ref.responseInterceptorErrorCb;
+
     _classCallCheck(this, Http);
 
     this.__http__ = axios || _fetch["default"].create(options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb);

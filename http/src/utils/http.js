@@ -24,7 +24,7 @@ export default class Http {
    * @param {Function} responseInterceptorSuccessCb 非必填 响应拦截器成功回调，必须返回一个response对象
    * @param {Function} responseInterceptorErrorCb 非必填 响应拦截器失败回调，必须返回一个response对象
    */
-  constructor(axios, options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb) {
+  constructor({ axios, options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb } = {}) {
     this.__http__ = axios || Fetch.create(options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb);
   }
 

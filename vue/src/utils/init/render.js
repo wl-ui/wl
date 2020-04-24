@@ -23,6 +23,7 @@ import { DataType } from "wl-core"
  * @description directives 默认[] 指令数组 格式为 {name:"", rule: ()=>{}}
  * @description plugins 默认[] 插件数组 [wlui, el-input] 可以直接Vue.use()的插件数组
  * @description fncBeforeVue 实例化vue前可执行的回调函数 fncBeforeVue(vue){... 你的逻辑}
+ * @description auth 是否需要鉴权系统，如果不需要，后续参数无需再传
  * @desc {Object}  routeOptions 路由守卫配置项 下为详细注解
  * @description tokenKey: 'token', // 存储在local中的token的key
  * @description dispatchSetToken: 'app/setToken', // store设置token的actions命名空间
@@ -52,7 +53,7 @@ const render = ({ root, router, store, options = {}, routeOptions = {}, menuOpti
     throw Error('options必须是对象格式');
   }
   // 提取render配置参数
-  const { fastclick = false, cookie = false, lazyOptions, plugins = [], filters = [], directives = [], fncBeforeVue } = options;
+  const { fastclick = false, cookie = false, auth = true, lazyOptions, plugins = [], filters = [], directives = [], fncBeforeVue } = options;
   // 检查指令和过滤器格式
   if (!DataType.isArray(filters) || !DataType.isArray(directives) || !DataType.isArray(plugins)) {
     console.error('filters、directives、plugins需要是数组格式！')
@@ -74,7 +75,7 @@ const render = ({ root, router, store, options = {}, routeOptions = {}, menuOpti
   // 在实例化vue前 可传入回调函数自定义逻辑
   fncBeforeVue && fncBeforeVue(Vue);
   // 执行鉴权系统
-  registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes);
+  auth && registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes);
   // 实例化vue
   new Vue({
     router,

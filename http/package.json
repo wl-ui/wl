@@ -1,6 +1,6 @@
 {
   "name": "wl-http",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "基础通信库封装",
   "main": "dist/index.js",
   "scripts": {
@@ -15,6 +15,8 @@
     "wl-http",
     "http",
     "axios",
+    "mock",
+    "mockjs",
     "vue"
   ],
   "author": "weilan <17796646068@163.com>",
@@ -31,6 +33,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "mockjs": "^1.1.0",
     "wl-core": "^1.0.0"
   }
 }
