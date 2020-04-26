@@ -5,16 +5,16 @@
  */
 
 import { _storageType } from '../config/settings';
-import dataType from './type';
+import DataType from './type';
 
 /**
  * @method 基础判断
  * @param storageType 存储类型
  * @param encryptType 加密类型
  */
-const _core = (storageType = _storageType.local, encryptType) => {
+const _core = (storageType = _storageType.Local, encryptType) => {
   if (!encryptType) {
-    return { storage: storageType === _storageType.local ? localStorage : sessionStorage }
+    return { storage: storageType === _storageType.Local ? localStorage : sessionStorage }
   }
 }
 
@@ -28,7 +28,7 @@ export default class Storage {
    */
   static set(key, value, type, encrypt) {
     const { storage } = _core(type);
-    let _processed_value = dataType.isObject(value) || dataType.isArray(value) ? JSON.stringify(value) : value;
+    let _processed_value = DataType.isObject(value) || DataType.isArray(value) ? JSON.stringify(value) : value;
     storage.setItem(key, _processed_value);
   }
 

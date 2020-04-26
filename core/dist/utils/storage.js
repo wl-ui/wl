@@ -23,12 +23,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * @param encryptType 加密类型
  */
 var _core = function _core() {
-  var storageType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings._storageType.local;
+  var storageType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _settings._storageType.Local;
   var encryptType = arguments.length > 1 ? arguments[1] : undefined;
 
   if (!encryptType) {
     return {
-      storage: storageType === _settings._storageType.local ? localStorage : sessionStorage
+      storage: storageType === _settings._storageType.Local ? localStorage : sessionStorage
     };
   }
 };
