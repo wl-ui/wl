@@ -21,7 +21,7 @@ var _directives2 = _interopRequireDefault(require("../directives"));
 
 var _auth = _interopRequireDefault(require("../auth"));
 
-var _settins = require("../../config/settins");
+var _settings = require("../../config/settings");
 
 var _wlCore = require("wl-core");
 
@@ -81,7 +81,7 @@ var render = function render() {
       _ref$nextRoutes = _ref.nextRoutes,
       nextRoutes = _ref$nextRoutes === void 0 ? [] : _ref$nextRoutes;
 
-  var mount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settins._vueOptions.mount;
+  var mount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings._vueOptions.mount;
 
   // 检查必要条件
   if (!root || !router || !store) {

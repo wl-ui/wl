@@ -4,7 +4,7 @@
  * @description 整理需要登录后异步推入的路由
  */
 import { flattenDeep, DataType } from "wl-core"
-import { _menuDataOptions } from "../../config/settins"
+import { _menuDataOptions } from "../../config/settings"
 
 /**
  * 异步推入鉴权路由 要求必须存在@/views/layout/index.vue主体视图盒子和/index首页路径

@@ -15,7 +15,7 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/de
 
 var _wlCore = require("wl-core");
 
-var _settins = require("../../config/settins");
+var _settings = require("../../config/settings");
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -37,7 +37,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
   if (!_wlCore.DataType.isObject(options)) throw Error('options 必须是一个对象！');
 
-  var _options = _objectSpread({}, _settins._menuDataOptions, {}, options); // 主视图路由
+  var _options = _objectSpread({}, _settings._menuDataOptions, {}, options); // 主视图路由
 
 
   var userRouter = {

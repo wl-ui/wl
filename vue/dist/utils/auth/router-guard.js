@@ -15,7 +15,7 @@ var _vaAuth = _interopRequireDefault(require("./va-auth"));
 
 var _asyncRoutes2 = _interopRequireDefault(require("./async-routes"));
 
-var _settins = require("../../config/settins");
+var _settings = require("../../config/settings");
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -42,12 +42,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var registerRouteGuard = function registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes) {
   if (!_wlCore.DataType.isObject(routeOptions)) throw Error('routeOptions 必须是一个对象！');
 
-  var _option = _objectSpread({}, _settins._routeGuardOptions, {}, routeOptions);
+  var _option = _objectSpread({}, _settings._routeGuardOptions, {}, routeOptions);
 
   if (!(_option === null || _option === void 0 ? void 0 : _option.apiFn)) throw Error('apiFn lost！缺少获取菜单数据的api函数！');
   router.beforeEach(function (to, from, next) {
     // 检查是否存在登录状态
-    var _jwt = _wlCore.Storage.get(_option.tokenKey, 'local'); // 存在登陆状态
+    var _jwt = _wlCore.Storage.get(_option.tokenKey); // 存在登陆状态
 
 
     if (_jwt && _jwt != 'undefined') {
@@ -55,7 +55,7 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
       if (_vaAuth["default"].vaJwtExpired(_jwt, _option.vaJwtExpiredFn)) {
         store.dispatch(_option.dispatchSetToken, '');
 
-        _wlCore.Storage.del(_option.tokenKey, 'local');
+        _wlCore.Storage.remove(_option.tokenKey);
 
         next({
           path: _option.pathLogin

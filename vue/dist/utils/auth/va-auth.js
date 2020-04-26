@@ -57,8 +57,15 @@ var VaJwt = /*#__PURE__*/function () {
   }, {
     key: "vaJwtExpired",
     value: function vaJwtExpired(jwt, vaCb) {
-      var exp = payloadAtob(jwt).exp;
-      return vaCb ? vaCb(exp) : _wlCore.Time.isBefore(exp, new Date());
+      var exp = this.payloadAtob(jwt).exp * 1000;
+
+      if (vaCb) {
+        return vaCb(exp);
+      }
+
+      var _time = new _wlCore.Time(exp);
+
+      return _time.isBefore(new Date());
     }
     /**
      * 监测浏览器tab页切换立即校验账号

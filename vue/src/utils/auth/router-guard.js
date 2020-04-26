@@ -6,7 +6,7 @@
 import { Storage, DataType } from "wl-core"
 import VaUserAuth from "./va-auth"
 import asyncRoutes from './async-routes'; // 导入异步插入路由函数
-import { _routeGuardOptions } from "../../config/settins"; // 路由守卫配置项
+import { _routeGuardOptions } from "../../config/settings"; // 路由守卫配置项
 
 /**
  * 注册路由守卫
@@ -31,13 +31,13 @@ const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes
 
   router.beforeEach((to, from, next) => {
     // 检查是否存在登录状态
-    let _jwt = Storage.get(_option.tokenKey, 'local');
+    let _jwt = Storage.get(_option.tokenKey);
     // 存在登陆状态
     if (_jwt && _jwt != 'undefined') {
       // 第一次打开页面token过期进入登陆页
       if (VaUserAuth.vaJwtExpired(_jwt, _option.vaJwtExpiredFn)) {
         store.dispatch(_option.dispatchSetToken, '')
-        Storage.del(_option.tokenKey, 'local')
+        Storage.remove(_option.tokenKey)
         next({
           path: _option.pathLogin
         });

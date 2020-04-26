@@ -33,8 +33,12 @@ export default class VaJwt {
    * @param {Function} vaCb 自定义验证函数，返回Boolean true表示过期
    */
   static vaJwtExpired(jwt, vaCb) {
-    let exp = payloadAtob(jwt).exp;
-    return vaCb ? vaCb(exp) : Time.isBefore(exp, new Date());
+    let exp = this.payloadAtob(jwt).exp * 1000;
+    if (vaCb) {
+      return vaCb(exp)
+    }
+    let _time = new Time(exp);
+    return _time.isBefore(new Date());
   }
 
   /**

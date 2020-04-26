@@ -5,7 +5,7 @@ import VueLazyLoad from 'vue-lazyload' // 图片懒加载库
 import selfFilters from '../filters' // 导入默认过滤器
 import selfDirectives from '../directives' // 导入默认指令
 import registerRouteGuard from "../auth" // 导入鉴权系统
-import { _vueOptions } from "../../config/settins"
+import { _vueOptions } from "../../config/settings"
 import { DataType } from "wl-core"
 
 /**

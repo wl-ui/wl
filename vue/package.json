@@ -1,6 +1,6 @@
 {
   "name": "wl-vue",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "vue基础库",
   "main": "dist/index.js",
   "scripts": {

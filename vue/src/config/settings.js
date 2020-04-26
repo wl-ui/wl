@@ -16,8 +16,8 @@ const _routeGuardOptions = {
   dispatchSetPermissions: 'menu/setPermissions', // store设置按钮权限码的actions命名空间
   pathLogin: '/login', // 登录页的 router path
   pathLogged: '/index', // 已登录后 再进登录页要重定向的 router path
-  apiFn: 'getPermsApi', // 获取菜单数据的api函数
-  vaJwtExpiredFn: 'vaJwtExpired', // 自定义校验jwt是否过期的函数
+  apiFn: null, // 获取菜单数据的api函数
+  vaJwtExpiredFn: null, // 自定义校验jwt是否过期的函数
 }
 
 // 实例化vue配置项
