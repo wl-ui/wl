@@ -12,7 +12,7 @@ export default class Time {
    * @param {*} date 时间
    * @param {*} format 格式
    */
-  constructor(date, format) {
+  constructor(date = null, format = null) {
     this.__date__ = date;
     this.__format__ = format;
   }
@@ -59,7 +59,7 @@ export default class Time {
    * @param {*} unit 时间单位默认秒
    */
   static isBefore(startDate, endDate, unit = _timeUnit.Second) {
-    return dayjs(startDate).isBefore(endDate, unit);
+    return this.dayjs(startDate).isBefore(endDate, unit);
   }
 
   /**
@@ -69,6 +69,6 @@ export default class Time {
    * @param {*} unit 时间单位默认秒
    */
   static diff(startDate, endDate, unit = _timeUnit.Second) {
-    return dayjs(endDate).diff(startDate, unit);
+    return this.dayjs(endDate).diff(startDate, unit);
   }
 }
