@@ -150,8 +150,8 @@ var _configResponseInterceptor = function _configResponseInterceptor(instance, r
       if (responseInterceptorErrorCb) {
         var _res = responseInterceptorErrorCb(err);
 
-        if (!_wlCore.DataType.isObject(err)) {
-          throw Error('responseInterceptorErrorCb必须返回一个response对象');
+        if (!_wlCore.DataType.isObject(err === null || err === void 0 ? void 0 : err.config)) {
+          throw Error('responseInterceptorErrorCb必须返回一个err包含{config,response}');
         }
 
         return Promise.reject(_res);

@@ -120,8 +120,8 @@ const _configResponseInterceptor = (instance, responseInterceptorSuccessCb, resp
         // 自定义重复请求后失败的回调
         if (responseInterceptorErrorCb) {
           const _res = responseInterceptorErrorCb(err);
-          if (!DataType.isObject(err)) {
-            throw Error('responseInterceptorErrorCb必须返回一个response对象')
+          if (!DataType.isObject(err?.config)) {
+            throw Error('responseInterceptorErrorCb必须返回一个err包含{config,response}')
           }
           return Promise.reject(_res);;
         }
