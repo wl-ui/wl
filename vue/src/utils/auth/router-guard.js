@@ -49,7 +49,7 @@ const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes
       if (store.getters.menu.length === 0) {
         _option.apiFn()
           .then(({ data }) => {
-            let _menu = data.data || [];
+            let _menu = data.data || [];/*  */
             let { routes, permissions } = asyncRoutes(_menu, nextRoutes, menuOptions)
             router.addRoutes(routes); // 推入异步路由
             store.dispatch(_option.dispatchSetMenu, _menu); // 将菜单数据存入store

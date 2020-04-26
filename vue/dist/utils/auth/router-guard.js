@@ -71,6 +71,8 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
           var data = _ref.data;
 
           var _menu = data.data || [];
+          /*  */
+
 
           var _asyncRoutes = (0, _asyncRoutes2["default"])(_menu, nextRoutes, menuOptions),
               routes = _asyncRoutes.routes,

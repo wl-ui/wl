@@ -37,8 +37,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
   if (!_wlCore.DataType.isObject(options)) throw Error('options 必须是一个对象！');
 
-  var _options = _objectSpread({}, _settings._menuDataOptions, {}, options); // 主视图路由
+  var _options = _objectSpread({}, _settings._menuDataOptions, {}, options);
 
+  if (!_options.mapPathFn) throw Error('options 内必须有路由映射真实路径方法 mapPathFn！'); // 主视图路由
 
   var userRouter = {
     path: "/layout",
@@ -70,11 +71,7 @@ var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
         // 命名路由 用于配合菜单简洁跳转
         meta: item[_options.meta],
         // 路由元信息 定义路由时即可携带的参数，可用来管理每个路由的按钮操作权限
-        component: function component() {
-          return Promise.resolve("@/views".concat(_url, "/index.vue")).then(function (s) {
-            return (0, _interopRequireWildcard2["default"])(require(s));
-          });
-        } // 路由映射真实视图路径
+        component: _options.mapPathFn(item) // 路由映射真实视图路径
 
       }; // 将所有权限码收集存入store
 

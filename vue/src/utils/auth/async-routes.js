@@ -22,6 +22,7 @@ import { _menuDataOptions } from "../../config/settings"
 const asyncRoutes = (data, nextRoutes, options) => {
   if (!DataType.isObject(options)) throw Error('options 必须是一个对象！');
   let _options = { ..._menuDataOptions, ...options }
+  if (!_options.mapPathFn) throw Error('options 内必须有路由映射真实路径方法 mapPathFn！');
   // 主视图路由
   let userRouter = {
     path: "/layout",
@@ -45,7 +46,7 @@ const asyncRoutes = (data, nextRoutes, options) => {
         path: _url, // 路由路径名
         name: item[_options.name], // 命名路由 用于配合菜单简洁跳转
         meta: item[_options.meta], // 路由元信息 定义路由时即可携带的参数，可用来管理每个路由的按钮操作权限
-        component: () => import(`@/views${_url}/index.vue`) // 路由映射真实视图路径
+        component: _options.mapPathFn(item) // 路由映射真实视图路径
       };
       // 将所有权限码收集存入store
       let _permissions = item[_options.permissions];
