@@ -13,7 +13,7 @@ export default class Time {
    * @param {*} format 格式
    */
   constructor(date = null, format = null) {
-    this.__date__ = date;
+    this.__date__ = this.dayjs(date);
     this.__format__ = format;
   }
 
@@ -54,21 +54,19 @@ export default class Time {
 
   /**
    * 时间比较，是否之前
-   * @param {*} startDate 开始时间
    * @param {*} endDate 结束时间
    * @param {*} unit 时间单位默认秒
    */
-  static isBefore(startDate, endDate, unit = _timeUnit.Second) {
-    return this.dayjs(startDate).isBefore(endDate, unit);
+  isBefore(endDate, unit = _timeUnit.Second) {
+    return this.__date__.isBefore(endDate, unit);
   }
 
   /**
    * 计算时差
-   * @param {*} startDate 开始时间
    * @param {*} endDate 结束时间
    * @param {*} unit 时间单位默认秒
    */
-  static diff(startDate, endDate, unit = _timeUnit.Second) {
-    return this.dayjs(endDate).diff(startDate, unit);
+  diff(endDate, unit = _timeUnit.Second) {
+    return this.__date__.diff(endDate, unit);
   }
 }

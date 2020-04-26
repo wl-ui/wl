@@ -29,7 +29,7 @@ var Time = /*#__PURE__*/function () {
 
     _classCallCheck(this, Time);
 
-    this.__date__ = date;
+    this.__date__ = this.dayjs(date);
     this.__format__ = format;
   }
   /**
@@ -86,29 +86,27 @@ var Time = /*#__PURE__*/function () {
     }
     /**
      * 时间比较，是否之前
-     * @param {*} startDate 开始时间
      * @param {*} endDate 结束时间
      * @param {*} unit 时间单位默认秒
      */
 
-  }], [{
+  }, {
     key: "isBefore",
-    value: function isBefore(startDate, endDate) {
-      var unit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings._timeUnit.Second;
-      return this.dayjs(startDate).isBefore(endDate, unit);
+    value: function isBefore(endDate) {
+      var unit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings._timeUnit.Second;
+      return this.__date__.isBefore(endDate, unit);
     }
     /**
      * 计算时差
-     * @param {*} startDate 开始时间
      * @param {*} endDate 结束时间
      * @param {*} unit 时间单位默认秒
      */
 
   }, {
     key: "diff",
-    value: function diff(startDate, endDate) {
-      var unit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _settings._timeUnit.Second;
-      return this.dayjs(endDate).diff(startDate, unit);
+    value: function diff(endDate) {
+      var unit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings._timeUnit.Second;
+      return this.__date__.diff(endDate, unit);
     }
   }]);
 
