@@ -31,13 +31,13 @@ const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes
 
   router.beforeEach((to, from, next) => {
     // 检查是否存在登录状态
-    let _jwt = Storage.get(tokenKey, 'local');
+    let _jwt = Storage.get(_option.tokenKey, 'local');
     // 存在登陆状态
     if (_jwt && _jwt != 'undefined') {
       // 第一次打开页面token过期进入登陆页
       if (VaUserAuth.vaJwtExpired(_jwt, _option.vaJwtExpiredFn)) {
         store.dispatch(_option.dispatchSetToken, '')
-        Storage.del(tokenKey, 'local')
+        Storage.del(_option.tokenKey, 'local')
         next({
           path: _option.pathLogin
         });

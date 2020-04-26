@@ -47,7 +47,7 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
   if (!(_option === null || _option === void 0 ? void 0 : _option.apiFn)) throw Error('apiFn lost！缺少获取菜单数据的api函数！');
   router.beforeEach(function (to, from, next) {
     // 检查是否存在登录状态
-    var _jwt = _wlCore.Storage.get(tokenKey, 'local'); // 存在登陆状态
+    var _jwt = _wlCore.Storage.get(_option.tokenKey, 'local'); // 存在登陆状态
 
 
     if (_jwt && _jwt != 'undefined') {
@@ -55,7 +55,7 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
       if (_vaAuth["default"].vaJwtExpired(_jwt, _option.vaJwtExpiredFn)) {
         store.dispatch(_option.dispatchSetToken, '');
 
-        _wlCore.Storage.del(tokenKey, 'local');
+        _wlCore.Storage.del(_option.tokenKey, 'local');
 
         next({
           path: _option.pathLogin
