@@ -4,6 +4,7 @@
  * @description 整理需要登录后异步推入的路由
  */
 import { flattenDeep, DataType } from "wl-core"
+// import routeMap from "./map-router"
 import { _menuDataOptions } from "../../config/settings"
 
 /**
@@ -37,6 +38,8 @@ const asyncRoutes = (data, nextRoutes, options) => {
   let permissions = [];
   // 将菜单数据处理为一维函数
   let menu = flattenDeep(data, _options.children);
+  // 处理路由映射真实路径，放在封装里babel之后就失效了，暂时不提供这个公共方法，在每个项目里写一遍吧
+  // let routeMapFile = _options.mapPathFn ? _options.mapPathFn : routeMap;
   // 遍历处理路由 
   menu.forEach(item => {
     let _url = item[_options.url];
@@ -66,6 +69,7 @@ const asyncRoutes = (data, nextRoutes, options) => {
 
   return {
     routes: [userRouter, errorBox],
+    menuList: menu,
     permissions
   }
 }

@@ -140,7 +140,9 @@ var render = function render() {
 
   fncBeforeVue && fncBeforeVue(_vue["default"]); // 执行鉴权系统
 
-  auth && (0, _auth["default"])(router, store, routeOptions, menuOptions, nextRoutes); // 实例化vue
+  auth && (0, _auth["default"])(router, store, routeOptions, menuOptions, nextRoutes); // 阻止启动生产消息
+
+  _vue["default"].config.productionTip = false; // 实例化vue
 
   var vm = new _vue["default"]({
     router: router,

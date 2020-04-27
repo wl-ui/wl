@@ -26,6 +26,8 @@ var _routeGuardOptions = {
   // store设置token的actions命名空间
   dispatchSetMenu: 'menu/setMenu',
   // store设置菜单的actions命名空间
+  dispatchSetMenuList: 'menu/setMenuList',
+  // store设置一维菜单的actions命名空间
   dispatchSetPermissions: 'menu/setPermissions',
   // store设置按钮权限码的actions命名空间
   pathLogin: '/login',

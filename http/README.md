@@ -66,3 +66,5 @@ methods: {
   }
 }
 ```
+
+### 4. Http类提供 get，post，all，del，put，patch 共6中方法

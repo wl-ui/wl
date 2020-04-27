@@ -50,9 +50,10 @@ const registerRouteGuard = (router, store, routeOptions, menuOptions, nextRoutes
         _option.apiFn()
           .then(({ data }) => {
             let _menu = data.data || [];/*  */
-            let { routes, permissions } = asyncRoutes(_menu, nextRoutes, menuOptions)
+            let { routes, permissions, menuList } = asyncRoutes(_menu, nextRoutes, menuOptions)
             router.addRoutes(routes); // 推入异步路由
             store.dispatch(_option.dispatchSetMenu, _menu); // 将菜单数据存入store
+            store.dispatch(_option.dispatchSetMenuList, menuList); // 将菜单一维化数据存入store
             store.dispatch(_option.dispatchSetPermissions, permissions); // 将权限码数据存入store
             next({ ...to, replace: true });
           })

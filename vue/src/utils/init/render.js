@@ -76,6 +76,8 @@ const render = ({ root, router, store, options = {}, routeOptions = {}, menuOpti
   fncBeforeVue && fncBeforeVue(Vue);
   // 执行鉴权系统
   auth && registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes);
+  // 阻止启动生产消息
+  Vue.config.productionTip = false;
   // 实例化vue
   const vm = new Vue({
     router,

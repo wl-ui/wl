@@ -28,6 +28,7 @@ const options = {
     tokenKey: 'token', // 存储在local中的token的key
     dispatchSetToken: 'app/setToken', // store设置token的actions命名空间 默认'app/setToken'
     dispatchSetMenu: 'menu/setMenu', // store设置菜单的actions命名空间 默认'menu/setMenu'
+    dispatchSetMenuList: 'menu/setMenuList', // store设置一维菜单的actions命名空间
     dispatchSetPermissions: 'menu/setPermissions', // store设置按钮权限码的actions命名空间 默认'menu/setPermissions'
     pathLogin: '/login', // 登录页的 router path 默认'/login'
     pathLogged: '/index', // 已登录后 再进登录页时自动重定向的 router path 默认'/index'

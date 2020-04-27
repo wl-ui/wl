@@ -57,7 +57,9 @@ var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
 
   var permissions = []; // 将菜单数据处理为一维函数
 
-  var menu = (0, _wlCore.flattenDeep)(data, _options.children); // 遍历处理路由 
+  var menu = (0, _wlCore.flattenDeep)(data, _options.children); // 处理路由映射真实路径，放在封装里babel之后就失效了，暂时不提供这个公共方法，在每个项目里写一遍吧
+  // let routeMapFile = _options.mapPathFn ? _options.mapPathFn : routeMap;
+  // 遍历处理路由 
 
   menu.forEach(function (item) {
     var _url = item[_options.url];
@@ -91,6 +93,7 @@ var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
   };
   return {
     routes: [userRouter, errorBox],
+    menuList: menu,
     permissions: permissions
   };
 };

@@ -76,11 +76,14 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
 
           var _asyncRoutes = (0, _asyncRoutes2["default"])(_menu, nextRoutes, menuOptions),
               routes = _asyncRoutes.routes,
-              permissions = _asyncRoutes.permissions;
+              permissions = _asyncRoutes.permissions,
+              menuList = _asyncRoutes.menuList;
 
           router.addRoutes(routes); // 推入异步路由
 
           store.dispatch(_option.dispatchSetMenu, _menu); // 将菜单数据存入store
+
+          store.dispatch(_option.dispatchSetMenuList, menuList); // 将菜单一维化数据存入store
 
           store.dispatch(_option.dispatchSetPermissions, permissions); // 将权限码数据存入store
 
