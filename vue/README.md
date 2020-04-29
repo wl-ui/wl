@@ -33,7 +33,7 @@ const options = {
     pathLogin: '/login', // 登录页的 router path 默认'/login'
     pathLogged: '/index', // 已登录后 再进登录页时自动重定向的 router path 默认'/index'
     apiFn: ()=>{}, // **必须** 获取菜单数据的api函数，返回值为一个promise
-    vaJwtExpiredFn: 'vaJwtExpired', // 自定义校验jwt是否过期的函数 默认为比较jwt携带过期时间与当前时间比较，单位秒，传入表示自定义过期规则
+    vaJwtExpiredFn: ()=>{}, // 自定义校验jwt是否过期的函数 默认为比较jwt携带过期时间与当前时间比较，单位秒，传入表示自定义过期规则
   },
   menuOptions:{ // 菜单数据解析为路由数据配置项 下为详细注解
     url: 'url', // 前端地址栏路由 将映射真实文件路径 映射规则：import(`@/views${url}/index.vue`)
@@ -41,7 +41,8 @@ const options = {
     meta: 'meta', // 路由元数据
     children: 'children', // 子菜单字段
     permissions: 'permissions', // 按钮权限字段
-    path404: 'error/404' // 404路径
+    path404: 'error/404' // 404路径,
+    mapPathFn: (item) => {} // 路由映射文件路径方法 必填
   },
   nextRoutes:[] // 需要登录后插入的、非后台返回的路由列表 默认[] 
 }
@@ -53,9 +54,31 @@ const vueRender = () => render(options, mount);
 export default vueRender;
 ```
 
-### 2. 在main.js内注册：main.js
+### 2. 在main.js内实例化vue
+下面是 最少 & 必须 的配置项：
 ```js
-import vueRender from "render.js"
+import { render } from "wl-vue"
+import App from "./App.vue";
+import store from "./store";
+import router from "./router";
+import nextRoutes from "./router/next-router"
+import routeMap from "./router/map-router"
+import { getMenuApi } from "./api/menu"
+
+// 声明鉴权需要的参数
+const routeOptions = {
+  apiFn: getMenuApi
+}
+
+// 声明菜单解析为路由所需参数
+const menuOptions = {
+  mapPathFn: (item) => routeMap(item.url)
+}
+
+// 导出手动实例化vue函数
+const vueRender = () => render({ root: App, router, store, routeOptions, nextRoutes, menuOptions });
+
+export default vueRender;
 ```
 
 ### 3. 注意事项
@@ -74,8 +97,13 @@ import vueRender from "render.js"
 ```js
 component: () => import(`@/views${url}/index.vue`)
 ```
+3. 注意：因为在封装里路由映射文件会找不到，因此需要在每个项目里传入一个映射方法
+src/router/map-router.js
+```js
+module.exports = path => () => import(`@/views${path}/index.vue`);
+```
 
-3. 注意：路由守卫检查store中是否已经存在用户菜单指定为：
+4. 注意：路由守卫检查store中是否已经存在用户菜单指定为：
 ```js
 store.getters.menu
 ```

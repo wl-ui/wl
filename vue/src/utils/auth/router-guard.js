@@ -20,7 +20,7 @@ import { _routeGuardOptions } from "../../config/settings"; // 路由守卫配�
  * @description pathLogin: '/login', // 登录页的 router path
  * @description pathLogged: '/index', // 已登录后 再进登录页要重定向的 router path
  * @description apiFn: ()={}, // 获取菜单数据的api函数
- * @description vaJwtExpiredFn: 'vaJwtExpired', // 自定义校验jwt是否过期的函数
+ * @description vaJwtExpiredFn: ()={}, // 自定义校验jwt是否过期的函数
  * @param {*} menuOptions 菜单数据解析为路由数据配置项
  * @param {*} nextRoutes 需要登录后插入的 非后台返回的 路由列表
  */

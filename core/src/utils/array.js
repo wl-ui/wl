@@ -227,13 +227,13 @@ function intersectionBy(array1 = [], array2 = [], match = "Id") {
 }
 
 export {
-  valInDeep,
-  flattenDeep,
-  flattenDeepParents,
-  regDeepParents,
-  arrayToTree,
-  patchTreeChain,
-  locationAfterDelete,
-  splicParentsUntil,
-  intersectionBy
+  valInDeep, // 从树形数据中递归筛选目标值
+  flattenDeep, // 将树形数据向下递归为一维数组
+  flattenDeepParents, // 将树形数据向上将此支线递归为一维数组
+  regDeepParents, // 根据条件递归祖先元素
+  arrayToTree, // 将数组转化成树结构
+  patchTreeChain, // 如果数据里缺少树枝节点，则根据parents和自增长id补全整条树链，输出数据调用上部arrToTree函数组装成完整的树
+  locationAfterDelete, // 数组删除后重新定位
+  splicParentsUntil, // 从坐标值拼接指定字段到祖先元素
+  intersectionBy // 根据数组2内的元素，通过match字段匹配数组1内的完整内容组成的数据
 };

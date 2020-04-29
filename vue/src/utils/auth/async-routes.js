@@ -18,6 +18,7 @@ import { _menuDataOptions } from "../../config/settings"
  * @description children: 'children', // 子菜单字段
  * @description permissions: 'permissions', // 按钮权限字段
  * @description path404: 'error/404' // 404路径
+ * @description mapPathFn: ()=>{} // 路由映射文件路径函数
  * @returns {Object} {routes: 整理好的异步路由router.addRoutes()即可, permissions: 权限code码}
  */
 const asyncRoutes = (data, nextRoutes, options) => {

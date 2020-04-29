@@ -46,6 +46,6 @@ const debounce = (handler, delay = 500) => {
 }
 
 export {
-  throttle,
-  debounce
+  throttle, // 节流函数
+  debounce // 防抖函数
 }
