@@ -86,6 +86,7 @@ export {
   vaPhone, // el手机格式校验
   regPhone, // 正则手机格式校验
   isNum, // 验证数字
+  isInteger, // 验证整数
   validate, // 整体表单验证
 }
 ```
@@ -96,7 +97,7 @@ export {
   WlNumber
 }
 ```
-需要先初始化
+
 ```js
 const beginNum = new WlNumber(1);
 // 以下返回big数据，可以使用toString()或to.Fixed()转化

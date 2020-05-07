@@ -98,8 +98,33 @@ export {
   vaPhone, // el手机格式校验
   regPhone, // 正则手机格式校验
   isNum, // 验证数字
+  isInteger, // 验证整数
   validate, // 整体表单验证
 }
+
+```
+### WlNumber
+提供精确数字计算的类 Class
+```js
+export {
+  WlNumber
+}
+```
+
+```js
+const beginNum = new WlNumber(1);
+// 以下返回big数据，可以使用toString()或to.Fixed()转化
+beginNum.plus(2) // 加
+beginNum.minus(2) // 减
+beginNum.times(2) // 乘
+beginNum.div(2) // 除以
+beginNum.mod(2) // 取余
+beginNum.abs() // 取绝对值
+// 以下返回Boolean值
+beginNum.gt(2) // 大于
+beginNum.gte(2) // 大于等于
+beginNum.lt(2) // 小于
+beginNum.lte(2) // 小于等于
 ```
 
 ## wl-http
