@@ -16,13 +16,19 @@ function regPhone(value) {
 }
 
 /**
- * 验证数字
+ * 验证是数字类型或可转换为数字类型
  * @param {*} value 要验证的值
- * @param {*} integer 整数
  */
-function isNum(value, integer) {
-  if (integer) return /^[0-9]*$/.test(value);
-  return /(^[0-9]*$|^[0-9]+.[0-9]{1,6}$)/.test(value);
+function isNum(value) {
+  return !Number.isNaN(Math.sign(value));
+}
+
+/**
+ * @name 验证整数
+ * @param {*} val 要验证的内容 
+ */
+function isInteger(val) {
+  return /^[0-9]*$/.test(value);
 }
 
 /**
@@ -45,5 +51,6 @@ export {
   vaPhone, // el手机格式校验
   regPhone, // 正则手机格式校验
   isNum, // 验证数字
+  isInteger, // 验证整数
   validate, // 整体表单验证
 }

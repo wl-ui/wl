@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 var _exportNames = {
   Storage: true,
   DataType: true,
-  Time: true
+  Time: true,
+  WlNumber: true
 };
 Object.defineProperty(exports, "Storage", {
   enumerable: true,
@@ -26,12 +27,20 @@ Object.defineProperty(exports, "Time", {
     return _time["default"];
   }
 });
+Object.defineProperty(exports, "WlNumber", {
+  enumerable: true,
+  get: function get() {
+    return _number["default"];
+  }
+});
 
 var _storage = _interopRequireDefault(require("./utils/storage"));
 
 var _type = _interopRequireDefault(require("./utils/type"));
 
 var _time = _interopRequireDefault(require("./utils/time"));
+
+var _number = _interopRequireDefault(require("./utils/number"));
 
 var _array = require("./utils/array");
 

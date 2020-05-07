@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.vaPhone = vaPhone;
 exports.regPhone = regPhone;
 exports.isNum = isNum;
+exports.isInteger = isInteger;
 exports.validate = validate;
 
 function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -34,15 +35,22 @@ function regPhone(value) {
   return /^1[3-9][0-9]{9}/.test(value);
 }
 /**
- * 验证数字
+ * 验证是数字类型或可转换为数字类型
  * @param {*} value 要验证的值
- * @param {*} integer 整数
  */
 
 
-function isNum(value, integer) {
-  if (integer) return /^[0-9]*$/.test(value);
-  return /(^[0-9]*$|^[0-9]+.[0-9]{1,6}$)/.test(value);
+function isNum(value) {
+  return !Number.isNaN(Math.sign(value));
+}
+/**
+ * @name 验证整数
+ * @param {*} val 要验证的内容 
+ */
+
+
+function isInteger(val) {
+  return /^[0-9]*$/.test(value);
 }
 /**
  * 需要校验的表格验证

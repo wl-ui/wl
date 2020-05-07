@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.4.4"
   },
   "dependencies": {
+    "big.js": "^5.2.2",
     "dayjs": "^1.8.25"
   }
 }
