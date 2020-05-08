@@ -144,9 +144,7 @@ var WlNumber = /*#__PURE__*/function () {
   }], [{
     key: "toNumber",
     value: function toNumber(val) {
-      var _Math$sign;
-
-      return (_Math$sign = Math.sign(val)) !== null && _Math$sign !== void 0 ? _Math$sign : 0;
+      return Number(val) || 0;
     }
   }]);
 

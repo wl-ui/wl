@@ -109,7 +109,7 @@ class WlNumber {
    * @param {*} val 
    */
   static toNumber(val) {
-    return Math.sign(val) ?? 0
+    return Number(val) || 0
   }
 }
 
