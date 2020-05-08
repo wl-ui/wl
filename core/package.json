@@ -1,6 +1,6 @@
 {
   "name": "wl-core",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "项目基础核心库",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,22 @@
     "url": "git+ssh://git@github.com/wl-ui/wl.git"
   },
   "keywords": [
-    "wl-core"
+    "wl-core",
+    "核心库",
+    "utils",
+    "工具库",
+    "array",
+    "数组",
+    "number",
+    "数字型操作",
+    "time",
+    "时间类型操作",
+    "type",
+    "类型判断",
+    "storage",
+    "本地存储",
+    "validate",
+    "校验方法"
   ],
   "author": "weilan <17796646068@163.com>",
   "license": "ISC",

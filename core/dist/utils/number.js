@@ -136,6 +136,18 @@ var WlNumber = /*#__PURE__*/function () {
     value: function lte(val) {
       return this._val.lte(val);
     }
+    /**
+     * @name 将数据转化为数字类型，如果不可转化则返回0
+     * @param {*} val 
+     */
+
+  }], [{
+    key: "toNumber",
+    value: function toNumber(val) {
+      var _Math$sign;
+
+      return (_Math$sign = Math.sign(val)) !== null && _Math$sign !== void 0 ? _Math$sign : 0;
+    }
   }]);
 
   return WlNumber;

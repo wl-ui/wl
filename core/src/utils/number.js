@@ -103,6 +103,14 @@ class WlNumber {
   lte(val) {
     return this._val.lte(val);
   }
+
+  /**
+   * @name 将数据转化为数字类型，如果不可转化则返回0
+   * @param {*} val 
+   */
+  static toNumber(val) {
+    return Math.sign(val) ?? 0
+  }
 }
 
 export default WlNumber;

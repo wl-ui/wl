@@ -113,3 +113,7 @@ beginNum.gte(2) // 大于等于
 beginNum.lt(2) // 小于
 beginNum.lte(2) // 小于等于
 ```
+静态方法
+```js
+WlNumber.toNumber(val) // 返回转化后的bumber型值，不可转化的返回0
+```
