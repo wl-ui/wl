@@ -54,7 +54,7 @@ const asyncRoutes = (data, nextRoutes, options) => {
       };
       // 将所有权限码收集存入store
       let _permissions = item[_options.permissions];
-      if (DataType.isArray(_permissions)) permissions.concat(_permissions);
+      if (DataType.isArray(_permissions)) permissions.push(..._permissions);
       routerBox.push(routerItem);
     } catch (err) {
       throw Error('路由映射规则为：@/views${url}/index.vue', err);

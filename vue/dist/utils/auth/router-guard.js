@@ -42,7 +42,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var registerRouteGuard = function registerRouteGuard(router, store, routeOptions, menuOptions, nextRoutes) {
   if (!_wlCore.DataType.isObject(routeOptions)) throw Error('routeOptions 必须是一个对象！');
 
-  var _option = _objectSpread({}, _settings._routeGuardOptions, {}, routeOptions);
+  var _option = _objectSpread(_objectSpread({}, _settings._routeGuardOptions), routeOptions);
 
   if (!(_option === null || _option === void 0 ? void 0 : _option.apiFn)) throw Error('apiFn lost！缺少获取菜单数据的api函数！');
   router.beforeEach(function (to, from, next) {
@@ -87,7 +87,7 @@ var registerRouteGuard = function registerRouteGuard(router, store, routeOptions
 
           store.dispatch(_option.dispatchSetPermissions, permissions); // 将权限码数据存入store
 
-          next(_objectSpread({}, to, {
+          next(_objectSpread(_objectSpread({}, to), {}, {
             replace: true
           }));
         })["catch"]();

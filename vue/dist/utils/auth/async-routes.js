@@ -38,7 +38,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
   if (!_wlCore.DataType.isObject(options)) throw Error('options 必须是一个对象！');
 
-  var _options = _objectSpread({}, _settings._menuDataOptions, {}, options);
+  var _options = _objectSpread(_objectSpread({}, _settings._menuDataOptions), options);
 
   if (!_options.mapPathFn) throw Error('options 内必须有路由映射真实路径方法 mapPathFn！'); // 主视图路由
 
@@ -79,7 +79,7 @@ var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
       }; // 将所有权限码收集存入store
 
       var _permissions = item[_options.permissions];
-      if (_wlCore.DataType.isArray(_permissions)) permissions.concat(_permissions);
+      if (_wlCore.DataType.isArray(_permissions)) permissions.push.apply(permissions, (0, _toConsumableArray2["default"])(_permissions));
       routerBox.push(routerItem);
     } catch (err) {
       throw Error('路由映射规则为：@/views${url}/index.vue', err);

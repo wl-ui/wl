@@ -8,7 +8,6 @@ export default {
       const { value: _data } = binding;
       // 将所有按钮权限码提取
       const _permissions = store?.getters?.permissions || [];
-
       if (!_data) throw new Error(`The auth code is required，eg: v-auth="add" || v-auth="['add', 'edit']"`)
       // 当前权限是一个集合时
       let _hasPermissions = Array.isArray(_data) ? _data.some(i => _permissions.includes(i)) : _permissions.includes(_data);

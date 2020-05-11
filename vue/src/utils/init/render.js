@@ -63,7 +63,7 @@ const render = ({ root, router, store, options = {}, routeOptions = {}, menuOpti
   _filters.map(item => Vue.filter(item.name, item.rule));
   // 为Vue注册全局指令
   let _directives = selfDirectives.concat(directives);
-  _directives.map(item => Vue.directive(item.name, item.rule));
+  _directives.map(item => Vue.directive(item.name, item.rule(store)));
   // 为Vue注册全局组件
   plugins.map(item => Vue.use(item));
   // 解决移动端的300ms延迟问题(默认不启用)

@@ -124,7 +124,7 @@ var render = function render() {
   var _directives = _directives2["default"].concat(directives);
 
   _directives.map(function (item) {
-    return _vue["default"].directive(item.name, item.rule);
+    return _vue["default"].directive(item.name, item.rule(store));
   }); // 为Vue注册全局组件
 
 
