@@ -54,8 +54,8 @@ var _wlCore = require("wl-core");
  * @description dispatchSetPermissions: 'menu/setPermissions', // store设置按钮权限码的actions命名空间
  * @description pathLogin: '/login', // 登录页的 router path
  * @description pathLogged: '/index', // 已登录后 再进登录页要重定向的 router path
- * @description apiFn: 'getPermsApi', // 获取菜单数据的api函数
- * @description vaJwtExpiredFn: 'vaJwtExpired', // 自定义校验jwt是否过期的函数
+ * @description apiFn: ()=>{}, // 获取菜单数据的api函数
+ * @description vaJwtExpiredFn: ()=>{}, // 自定义校验jwt是否过期的函数
  * @desc {Object}: menuOptions 菜单数据解析为路由数据配置项 下为详细注解
  * @description url: 'url', // 前端地址栏路由 将映射真实文件路径 映射规则：import(`@/views${url}/index.vue`)
  * @description name: 'routerName', // 命名路由 

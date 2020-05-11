@@ -1,6 +1,6 @@
 {
   "name": "wl-vue",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "vue基础库",
   "main": "dist/index.js",
   "scripts": {
@@ -21,6 +21,8 @@
     "directives",
     "render",
     "permissions",
+    "前端鉴权",
+    "异步路由",
     "基础库"
   ],
   "author": "weilan <17796646068@163.com>",

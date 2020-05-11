@@ -32,6 +32,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  * @description children: 'children', // 子菜单字段
  * @description permissions: 'permissions', // 按钮权限字段
  * @description path404: 'error/404' // 404路径
+ * @description mapPathFn: ()=>{} // 路由映射文件路径函数
  * @returns {Object} {routes: 整理好的异步路由router.addRoutes()即可, permissions: 权限code码}
  */
 var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
@@ -78,7 +79,7 @@ var asyncRoutes = function asyncRoutes(data, nextRoutes, options) {
       }; // 将所有权限码收集存入store
 
       var _permissions = item[_options.permissions];
-      if (_wlCore.DataType.isArray(_permissions)) permissions.push(_permissions);
+      if (_wlCore.DataType.isArray(_permissions)) permissions.concat(_permissions);
       routerBox.push(routerItem);
     } catch (err) {
       throw Error('路由映射规则为：@/views${url}/index.vue', err);
