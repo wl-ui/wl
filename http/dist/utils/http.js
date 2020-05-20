@@ -28,7 +28,7 @@ var Http = /*#__PURE__*/function () {
   /**
    * 
    * @param {Object} axios 外部axios实例 无特殊情况不要使用此参数; 如果传入则表示使用自定义axios实例，后续参数将不会产生作用
-   * @param {Object} options Fetch.create
+   * @param {Object} axiosOptions Fetch.create
    * @description retry:Number 请求失败自动重连次数 默认2
    * @description retryDelay:Number 请求失败自动重连时间间隔 默认1000ms
    * @description withCredentials:Boolean 开启请求跨域 默认true
@@ -44,14 +44,14 @@ var Http = /*#__PURE__*/function () {
   function Http() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
         axios = _ref.axios,
-        options = _ref.options,
+        axiosOptions = _ref.axiosOptions,
         requestInterceptorSuccessCb = _ref.requestInterceptorSuccessCb,
         responseInterceptorSuccessCb = _ref.responseInterceptorSuccessCb,
         responseInterceptorErrorCb = _ref.responseInterceptorErrorCb;
 
     _classCallCheck(this, Http);
 
-    this.__http__ = axios || _fetch["default"].create(options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb);
+    this.__http__ = axios || _fetch["default"].create(axiosOptions, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb);
   }
   /**
    * get方法请求

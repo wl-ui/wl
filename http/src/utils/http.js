@@ -11,7 +11,7 @@ export default class Http {
   /**
    * 
    * @param {Object} axios 外部axios实例 无特殊情况不要使用此参数; 如果传入则表示使用自定义axios实例，后续参数将不会产生作用
-   * @param {Object} options Fetch.create
+   * @param {Object} axiosOptions Fetch.create
    * @description retry:Number 请求失败自动重连次数 默认2
    * @description retryDelay:Number 请求失败自动重连时间间隔 默认1000ms
    * @description withCredentials:Boolean 开启请求跨域 默认true
@@ -24,8 +24,8 @@ export default class Http {
    * @param {Function} responseInterceptorSuccessCb 非必填 响应拦截器成功回调，必须返回一个response对象
    * @param {Function} responseInterceptorErrorCb 非必填 响应拦截器失败回调，必须返回一个response对象
    */
-  constructor({ axios, options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb } = {}) {
-    this.__http__ = axios || Fetch.create(options, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb);
+  constructor({ axios, axiosOptions, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb } = {}) {
+    this.__http__ = axios || Fetch.create(axiosOptions, requestInterceptorSuccessCb, responseInterceptorSuccessCb, responseInterceptorErrorCb);
   }
 
   /**

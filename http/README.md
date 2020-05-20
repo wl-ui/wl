@@ -9,7 +9,7 @@ import Http from "wl-http"
 
 const options = {
   axios: null, // 是否使用外部axios实例，无特殊情况禁止使用
-  options: {
+  axiosOptions: {
     retry: 2, //Number 请求失败自动重连次数 默认2
     retryDelay: 1000, // 请求失败自动重连时间间隔 默认1000ms
     withCredentials: true, // Boolean 开启请求跨域 默认true

@@ -1,6 +1,6 @@
 {
   "name": "wl-http",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "基础通信库封装",
   "main": "dist/index.js",
   "scripts": {
