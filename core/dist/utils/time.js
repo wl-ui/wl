@@ -46,7 +46,7 @@ var Time = /*#__PURE__*/function () {
     }
     /**
      * 格式化时间
-     * @param {*} format 格式
+     * @param {String} format 格式
      */
 
   }, {
@@ -107,6 +107,18 @@ var Time = /*#__PURE__*/function () {
     value: function diff(endDate) {
       var unit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _settings._timeUnit.Second;
       return this.__date__.diff(endDate, unit);
+    }
+    /**
+     * @name 静态时间格式化
+     * @param {Date} date 时间
+     * @param {String} format 格式，默认YYYY-MM-DD
+     */
+
+  }], [{
+    key: "quickFormat",
+    value: function quickFormat(date) {
+      var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "YYYY-MM-DD";
+      return dayjs(date).format(format);
     }
   }]);
 

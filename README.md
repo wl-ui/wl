@@ -64,7 +64,7 @@ export {
 }
 ```
 主要用于对时间进行两次及以上操作的情况！对于时间格式化，在wl-vue中提供了time过滤器
-使用需要先实例化，全部方法如下：
+1. 使用需要先实例化，全部方法如下：
 ```js
 const timer = new Time('2020-02-14', 'YYYY/MM/DD');
 
@@ -74,6 +74,10 @@ timer.add(num, unit) // 时间加上数量，要加的时间数量，数量的�
 timer.subtract(num, unit) // 时间减去数量，要加的时间数量，数量的时间单位
 timer.isBefore(date, unit) // 时间是否在date之前，要比较的时间，时间的单位
 timer.diff(date, unit) // 计算时差，要减的日期，时间计算时间的单位
+```
+2. 静态方法可直接调用
+```js
+Time.quickFormat(new Date(), 'YYYY/MM/DD')
 ```
 
 ### Type

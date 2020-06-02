@@ -28,7 +28,7 @@ export default class Time {
 
   /**
    * 格式化时间
-   * @param {*} format 格式
+   * @param {String} format 格式
    */
   format(format) {
     return this.__date__?.format?.(format)
@@ -68,5 +68,14 @@ export default class Time {
    */
   diff(endDate, unit = _timeUnit.Second) {
     return this.__date__.diff(endDate, unit);
+  }
+
+  /**
+   * @name 静态时间格式化
+   * @param {Date} date 时间
+   * @param {String} format 格式，默认YYYY-MM-DD
+   */
+  static quickFormat(date, format = "YYYY-MM-DD") {
+    return dayjs(date).format(format)
   }
 }
