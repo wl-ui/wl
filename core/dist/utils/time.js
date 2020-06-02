@@ -118,7 +118,7 @@ var Time = /*#__PURE__*/function () {
     key: "quickFormat",
     value: function quickFormat(date) {
       var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "YYYY-MM-DD";
-      return dayjs(date).format(format);
+      return (0, _dayjs["default"])(date).format(format);
     }
   }]);
 

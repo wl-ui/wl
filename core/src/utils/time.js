@@ -76,6 +76,6 @@ export default class Time {
    * @param {String} format 格式，默认YYYY-MM-DD
    */
   static quickFormat(date, format = "YYYY-MM-DD") {
-    return dayjs(date).format(format)
+    return dayJs(date).format(format)
   }
 }
