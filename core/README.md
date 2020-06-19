@@ -121,3 +121,14 @@ beginNum.lte(2) // 小于等于
 ```js
 WlNumber.toNumber(val) // 返回转化后的bumber型值，不可转化的返回0
 ```
+
+### 常用JWT校验及解析方法
+```js
+import { VaJwt } from "wl-core"
+
+// VaJwt是一个验证和解析未加密jwt的类，提供了许多静态方法
+// console.log(VaJwt) 打印查看
+// 静态方法无需实例化可直接使用，例：
+const payload = VaJwt.payloadAtob(jwt);
+// 解析jwt中有效载荷内的数据
+```

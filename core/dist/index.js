@@ -7,7 +7,8 @@ var _exportNames = {
   Storage: true,
   DataType: true,
   Time: true,
-  WlNumber: true
+  WlNumber: true,
+  VaJwt: true
 };
 Object.defineProperty(exports, "Storage", {
   enumerable: true,
@@ -33,6 +34,12 @@ Object.defineProperty(exports, "WlNumber", {
     return _number["default"];
   }
 });
+Object.defineProperty(exports, "VaJwt", {
+  enumerable: true,
+  get: function get() {
+    return _jwt["default"];
+  }
+});
 
 var _storage = _interopRequireDefault(require("./utils/storage"));
 
@@ -41,6 +48,8 @@ var _type = _interopRequireDefault(require("./utils/type"));
 var _time = _interopRequireDefault(require("./utils/time"));
 
 var _number = _interopRequireDefault(require("./utils/number"));
+
+var _jwt = _interopRequireDefault(require("./utils/jwt"));
 
 var _array = require("./utils/array");
 
