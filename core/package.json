@@ -1,6 +1,6 @@
 {
   "name": "wl-core",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "项目基础核心库",
   "main": "dist/index.js",
   "scripts": {

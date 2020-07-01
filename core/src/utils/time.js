@@ -78,4 +78,12 @@ export default class Time {
   static quickFormat(date, format = "YYYY-MM-DD") {
     return dayJs(date).format(format)
   }
+
+  /**
+   * @name 初始化时间为dayjs格式
+   * @param {Date} date 时间
+   */
+  static init(date) {
+    return dayJs(date)
+  }
 }

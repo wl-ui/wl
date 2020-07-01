@@ -7,6 +7,7 @@ import VaJwt from "./utils/jwt"
 export * from "./utils/array"
 export * from "./utils/validate"
 export * from "./utils/event"
+export * from "./utils/utils"
 export {
   Storage,
   DataType,

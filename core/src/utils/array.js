@@ -1,8 +1,10 @@
 /**
- * auth: weilan
- * time: 2020.03.09
- * description: 一个数组操作函数库
+ * @auther weilan
+ * @time 2020.03.09
+ * @description: 一个数组操作函数库
  */
+
+import Time from "./time"
 
 /**
  * 从树形数据中递归筛选目标值
@@ -186,28 +188,25 @@ function locationAfterDelete(data, delId, actId, useTree = false) {
  * @param {*} options 配置项
  */
 function splicParentsUntil(data, coordinate, options = {
-  Splic: 'Name', // 所要拼接字段
-  Connector: '\\', // 连接符 
-  Id: "Id", // 数据源匹配字段
-  CoordinateId: 'id',
-  ParentId: "ParentId",
-  Parents: "Parents",
-  IdentityId: "IdentityId",
-  root: "00000000-0000-0000-0000-000000000000"
+  pathName: 'name', // 所要拼接字段
+  pathConnector: '\\', // 连接符 
+  pathId: "id", // 数据源匹配字段 
+  pathParents: "parents",
+  pathIdentityId: "identityId",
 }) {
-  let coordinate_item = data.find(i => i[options.Id] === coordinate[options.CoordinateId]);
+  let coordinate_item = data.find(i => i[options.pathId] === coordinate[options.pathId]);
   if (!coordinate_item) return '';
-  if (!coordinate_item[options.Parents]) return coordinate_item[options.Splic];
-  let _parents = coordinate_item[options.Parents]
-    .substring(1, coordinate_item[options.Parents].length - 1)
+  if (!coordinate_item[options.pathParents]) return coordinate_item[options.pathName];
+  let _parents = coordinate_item[options.pathParents]
+    .substring(1, coordinate_item[options.pathParents].length - 1)
     .split(",")
     .filter(i => !!i);
   let splic_parents = '';
   _parents.forEach(i => {
-    let _parent = data.find(t => t[options.IdentityId] == i);
-    splic_parents += `${_parent[options.Splic]}${options.Connector}`
+    let _parent = data.find(t => t[options.pathIdentityId] == i);
+    splic_parents += `${_parent[options.pathName]}${options.pathConnector}`
   })
-  return splic_parents + coordinate_item[options.Splic];
+  return splic_parents + coordinate_item[options.pathName];
 }
 
 /**
@@ -226,6 +225,50 @@ function intersectionBy(array1 = [], array2 = [], match = "Id") {
   return data;
 }
 
+/**
+ * 深拷贝
+ * @param {*} source 要拷贝的数据
+ */
+function deepClone(source) {
+  if (!source && typeof source !== "object") {
+    throw new Error("error arguments", "shallowClone");
+  }
+  const targetObj = source.constructor === Array ? [] : {};
+  Object.keys(source).forEach(keys => {
+    if (source[keys] && typeof source[keys] === "object") {
+      targetObj[keys] = source[keys].constructor === Array ? [] : {};
+      targetObj[keys] = deepClone(source[keys]);
+    } else {
+      targetObj[keys] = source[keys];
+    }
+  });
+  return targetObj;
+}
+
+/**
+ * 筛选出数组中最大值
+ * @param {*} arr 数据
+ * @param {*} key 如果是复杂型数组，请指定字段key
+ * @param {*} stamp 如果是时间格式，请设置以转化时间戳
+ */
+function getMax(arr = [], key = null, stamp = false) {
+  let _o = !key ? arr : arr.map(i => i[key]);
+  let _t = !stamp ? _o : _o.map(i => Time.init(i).valueOf());
+  return Math.max(..._t);
+}
+
+/**
+ * 筛选出数组中最小值
+ * @param {*} arr 数据
+ * @param {*} key 如果是复杂型数组，请指定字段key
+ * @param {*} stamp 如果是时间格式，请设置以转化时间戳
+ */
+function getMin(arr = [], key = null, stamp = false) {
+  let _o = !key ? arr : arr.map(i => i[key]);
+  let _t = !stamp ? _o : _o.map(i => Time.init(i).valueOf());
+  return Math.min(..._t);
+}
+
 export {
   valInDeep, // 从树形数据中递归筛选目标值
   flattenDeep, // 将树形数据向下递归为一维数组
@@ -235,5 +278,8 @@ export {
   patchTreeChain, // 如果数据里缺少树枝节点，则根据parents和自增长id补全整条树链，输出数据调用上部arrToTree函数组装成完整的树
   locationAfterDelete, // 数组删除后重新定位
   splicParentsUntil, // 从坐标值拼接指定字段到祖先元素
-  intersectionBy // 根据数组2内的元素，通过match字段匹配数组1内的完整内容组成的数据
+  intersectionBy, // 根据数组2内的元素，通过match字段匹配数组1内的完整内容组成的数据
+  deepClone, // 深拷贝
+  getMax, // 筛选出数组中最大值
+  getMin, // 筛选出数组中最小值
 };

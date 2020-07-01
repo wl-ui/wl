@@ -1,6 +1,7 @@
 # wl-core
 
-无框架依赖的核心层及工具层封装
+无框架依赖的核心层及工具层封装    
+下列说明中 export 内的方法名，均可 import { xx } from 'wl-core' 导入使用
 
 ### array
 提供有关数组的操作方法 Function
@@ -14,7 +15,10 @@ export {
   patchTreeChain, // 如果数据里缺少树枝节点，则根据parents和自增长id补全整条树链，输出数据调用上部arrToTree函数组装成完整的树
   locationAfterDelete, // 数组删除后重新定位
   splicParentsUntil, // 从坐标值拼接指定字段到祖先元素
-  intersectionBy // 根据数组2内的元素，通过match字段匹配数组1内的完整内容组成的数据
+  intersectionBy, // 根据数组2内的元素，通过match字段匹配数组1内的完整内容组成的数据
+  deepClone, // 深拷贝
+  getMax, // 筛选出数组中最大值
+  getMin, // 筛选出数组中最小值
 };
 ```
 
@@ -66,6 +70,7 @@ timer.diff(date, unit) // 计算时差，要减的日期，时间计算时间的
 2. 静态方法可直接调用
 ```js
 Time.quickFormat(new Date(), 'YYYY/MM/DD')
+Time.init(new Date())
 ```
 
 ### Type

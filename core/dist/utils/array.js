@@ -12,6 +12,15 @@ exports.patchTreeChain = patchTreeChain;
 exports.locationAfterDelete = locationAfterDelete;
 exports.splicParentsUntil = splicParentsUntil;
 exports.intersectionBy = intersectionBy;
+exports.deepClone = deepClone;
+exports.getMax = getMax;
+exports.getMin = getMin;
+
+var _time = _interopRequireDefault(require("./time"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -24,12 +33,6 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.it
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-/**
- * auth: weilan
- * time: 2020.03.09
- * description: 一个数组操作函数库
- */
 
 /**
  * 从树形数据中递归筛选目标值
@@ -249,25 +252,22 @@ function locationAfterDelete(data, delId, actId) {
 
 function splicParentsUntil(data, coordinate) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
-    Splic: 'Name',
+    pathName: 'name',
     // 所要拼接字段
-    Connector: '\\',
+    pathConnector: '\\',
     // 连接符 
-    Id: "Id",
-    // 数据源匹配字段
-    CoordinateId: 'id',
-    ParentId: "ParentId",
-    Parents: "Parents",
-    IdentityId: "IdentityId",
-    root: "00000000-0000-0000-0000-000000000000"
+    pathId: "id",
+    // 数据源匹配字段 
+    pathParents: "parents",
+    pathIdentityId: "identityId"
   };
   var coordinate_item = data.find(function (i) {
-    return i[options.Id] === coordinate[options.CoordinateId];
+    return i[options.pathId] === coordinate[options.pathId];
   });
   if (!coordinate_item) return '';
-  if (!coordinate_item[options.Parents]) return coordinate_item[options.Splic];
+  if (!coordinate_item[options.pathParents]) return coordinate_item[options.pathName];
 
-  var _parents = coordinate_item[options.Parents].substring(1, coordinate_item[options.Parents].length - 1).split(",").filter(function (i) {
+  var _parents = coordinate_item[options.pathParents].substring(1, coordinate_item[options.pathParents].length - 1).split(",").filter(function (i) {
     return !!i;
   });
 
@@ -275,13 +275,13 @@ function splicParentsUntil(data, coordinate) {
 
   _parents.forEach(function (i) {
     var _parent = data.find(function (t) {
-      return t[options.IdentityId] == i;
+      return t[options.pathIdentityId] == i;
     });
 
-    splic_parents += "".concat(_parent[options.Splic]).concat(options.Connector);
+    splic_parents += "".concat(_parent[options.pathName]).concat(options.pathConnector);
   });
 
-  return splic_parents + coordinate_item[options.Splic];
+  return splic_parents + coordinate_item[options.pathName];
 }
 /**
  * 根据数组2内的元素，通过match字段匹配数组1内的完整内容组成的数据
@@ -304,4 +304,72 @@ function intersectionBy() {
     match_success && data.push(match_success);
   });
   return data;
+}
+/**
+ * 深拷贝
+ * @param {*} source 要拷贝的数据
+ */
+
+
+function deepClone(source) {
+  if (!source && _typeof(source) !== "object") {
+    throw new Error("error arguments", "shallowClone");
+  }
+
+  var targetObj = source.constructor === Array ? [] : {};
+  Object.keys(source).forEach(function (keys) {
+    if (source[keys] && _typeof(source[keys]) === "object") {
+      targetObj[keys] = source[keys].constructor === Array ? [] : {};
+      targetObj[keys] = deepClone(source[keys]);
+    } else {
+      targetObj[keys] = source[keys];
+    }
+  });
+  return targetObj;
+}
+/**
+ * 筛选出数组中最大值
+ * @param {*} arr 数据
+ * @param {*} key 如果是复杂型数组，请指定字段key
+ * @param {*} stamp 如果是时间格式，请设置以转化时间戳
+ */
+
+
+function getMax() {
+  var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var stamp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  var _o = !key ? arr : arr.map(function (i) {
+    return i[key];
+  });
+
+  var _t = !stamp ? _o : _o.map(function (i) {
+    return _time["default"].init(i).valueOf();
+  });
+
+  return Math.max.apply(Math, _toConsumableArray(_t));
+}
+/**
+ * 筛选出数组中最小值
+ * @param {*} arr 数据
+ * @param {*} key 如果是复杂型数组，请指定字段key
+ * @param {*} stamp 如果是时间格式，请设置以转化时间戳
+ */
+
+
+function getMin() {
+  var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var stamp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  var _o = !key ? arr : arr.map(function (i) {
+    return i[key];
+  });
+
+  var _t = !stamp ? _o : _o.map(function (i) {
+    return _time["default"].init(i).valueOf();
+  });
+
+  return Math.min.apply(Math, _toConsumableArray(_t));
 }

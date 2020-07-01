@@ -120,6 +120,16 @@ var Time = /*#__PURE__*/function () {
       var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "YYYY-MM-DD";
       return (0, _dayjs["default"])(date).format(format);
     }
+    /**
+     * @name 初始化时间为dayjs格式
+     * @param {Date} date 时间
+     */
+
+  }, {
+    key: "init",
+    value: function init(date) {
+      return (0, _dayjs["default"])(date);
+    }
   }]);
 
   return Time;
