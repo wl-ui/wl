@@ -269,6 +269,38 @@ function getMin(arr = [], key = null, stamp = false) {
   return Math.min(..._t);
 }
 
+/**
+ * @name 数组去重
+ * @param {Array} arr 原数组
+ * @param {String} key 要比对的key，不传则认为是简单数组
+ */
+const unique = (arr, key) => {
+  let hashList = [];
+  key ? arr.forEach(i => {
+    if (hashList.find(t => t[key] == i[key])) return;
+    hashList.push(i)
+  }) : arr.forEach(i => {
+    if (hashList.includes(i)) return;
+    hashList.push(i)
+  })
+  return hashList
+}
+
+/**
+ * @name 数组查重
+ * @param {Array} arr 原数组
+ * @param {String} key 要比对的key，不传则认为是简单数组
+ */
+const depData = (arr, key) => {
+  let hashList = [];
+  const depData = arr.filter((i) => {
+    const _item = key ? i[key] : i
+    if (hashList.includes(_item)) return i;
+    hashList.push(_item);
+  });
+  return depData
+}
+
 export {
   valInDeep, // 从树形数据中递归筛选目标值
   flattenDeep, // 将树形数据向下递归为一维数组
@@ -282,4 +314,6 @@ export {
   deepClone, // 深拷贝
   getMax, // 筛选出数组中最大值
   getMin, // 筛选出数组中最小值
+  unique, // 数组去重
+  depData, // 获取数组重复数据
 };

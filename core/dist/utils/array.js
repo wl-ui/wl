@@ -15,6 +15,7 @@ exports.intersectionBy = intersectionBy;
 exports.deepClone = deepClone;
 exports.getMax = getMax;
 exports.getMin = getMin;
+exports.depData = exports.unique = void 0;
 
 var _time = _interopRequireDefault(require("./time"));
 
@@ -373,3 +374,44 @@ function getMin() {
 
   return Math.min.apply(Math, _toConsumableArray(_t));
 }
+/**
+ * @name 数组去重
+ * @param {Array} arr 原数组
+ * @param {String} key 要比对的key，不传则认为是简单数组
+ */
+
+
+var unique = function unique(arr, key) {
+  var hashList = [];
+  key ? arr.forEach(function (i) {
+    if (hashList.find(function (t) {
+      return t[key] == i[key];
+    })) return;
+    hashList.push(i);
+  }) : arr.forEach(function (i) {
+    if (hashList.includes(i)) return;
+    hashList.push(i);
+  });
+  return hashList;
+};
+/**
+ * @name 数组查重
+ * @param {Array} arr 原数组
+ * @param {String} key 要比对的key，不传则认为是简单数组
+ */
+
+
+exports.unique = unique;
+
+var depData = function depData(arr, key) {
+  var hashList = [];
+  var depData = arr.filter(function (i) {
+    var _item = key ? i[key] : i;
+
+    if (hashList.includes(_item)) return i;
+    hashList.push(_item);
+  });
+  return depData;
+};
+
+exports.depData = depData;
