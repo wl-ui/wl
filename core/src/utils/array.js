@@ -301,6 +301,29 @@ const depData = (arr, key) => {
   return depData
 }
 
+/**
+ * @name 删除数据后自动定位
+ * @param {Array} data 未删除前数据
+ * @param {String} key 作为判断依据的数据key
+ * @param {String|Number} delId 要删除数据的id
+ * @param {String|Number} actId 当前选中的数据id
+ * @param {Boolean} isTree 
+ * @param {String} keyParent 
+ */
+const autoPositionAfterDelete = (data, key, delId, actId, isTree, keyParent) => {
+  // 源数据校验
+  if (!Array.isArray(data)) throw Error('data必须是一个数组');
+  // 找到当前选中数据索引
+  const activeIndex = data.findIndex(i => i[key] === actId);
+  // 删后数据
+  const nextData = data.filter(i => i[key] !== delId);
+  // 删除的是非当前选中数据，或删后数组为空，无需重新定位
+  if (delId !== actId || !nextData.length) return { nextItem: null, nextData }
+  // 删除的是当前选中数据，自动定位前一个数据，第0时自动定位后一个数据
+  const nextIndex = activeIndex !== 0 ? activeIndex - 1 : 0
+  return { nextItem: nextData[nextIndex], nextData }
+}
+
 export {
   valInDeep, // 从树形数据中递归筛选目标值
   flattenDeep, // 将树形数据向下递归为一维数组
@@ -316,4 +339,5 @@ export {
   getMin, // 筛选出数组中最小值
   unique, // 数组去重
   depData, // 获取数组重复数据
+  autoPositionAfterDelete, // 数组删除数据后自动定位
 };

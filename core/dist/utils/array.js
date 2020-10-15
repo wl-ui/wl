@@ -15,7 +15,7 @@ exports.intersectionBy = intersectionBy;
 exports.deepClone = deepClone;
 exports.getMax = getMax;
 exports.getMin = getMin;
-exports.depData = exports.unique = void 0;
+exports.autoPositionAfterDelete = exports.depData = exports.unique = void 0;
 
 var _time = _interopRequireDefault(require("./time"));
 
@@ -27,7 +27,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
@@ -413,5 +413,41 @@ var depData = function depData(arr, key) {
   });
   return depData;
 };
+/**
+ * @name 删除数据后自动定位
+ * @param {Array} data 未删除前数据
+ * @param {String} key 作为判断依据的数据key
+ * @param {String|Number} delId 要删除数据的id
+ * @param {String|Number} actId 当前选中的数据id
+ * @param {Boolean} isTree 
+ * @param {String} keyParent 
+ */
+
 
 exports.depData = depData;
+
+var autoPositionAfterDelete = function autoPositionAfterDelete(data, key, delId, actId, isTree, keyParent) {
+  // 源数据校验
+  if (!Array.isArray(data)) throw Error('data必须是一个数组'); // 找到当前选中数据索引
+
+  var activeIndex = data.findIndex(function (i) {
+    return i[key] === actId;
+  }); // 删后数据
+
+  var nextData = data.filter(function (i) {
+    return i[key] !== delId;
+  }); // 删除的是非当前选中数据，或删后数组为空，无需重新定位
+
+  if (delId !== actId || !nextData.length) return {
+    nextItem: null,
+    nextData: nextData
+  }; // 删除的是当前选中数据，自动定位前一个数据，第0时自动定位后一个数据
+
+  var nextIndex = activeIndex !== 0 ? activeIndex - 1 : 0;
+  return {
+    nextItem: nextData[nextIndex],
+    nextData: nextData
+  };
+};
+
+exports.autoPositionAfterDelete = autoPositionAfterDelete;

@@ -19,6 +19,7 @@ export {
   deepClone, // 深拷贝
   getMax, // 筛选出数组中最大值
   getMin, // 筛选出数组中最小值
+  autoPositionAfterDelete, // 重写的一维数组删除数据后自动定位
 };
 ```
 
