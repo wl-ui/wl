@@ -67,7 +67,7 @@ var Http = /*#__PURE__*/function () {
   _createClass(Http, [{
     key: "get",
     value: function get(options) {
-      return _fetch["default"].axios(_objectSpread({}, options, {
+      return _fetch["default"].axios(_objectSpread(_objectSpread({}, options), {}, {
         method: _settings._httpType.GET
       }));
     }
@@ -84,7 +84,7 @@ var Http = /*#__PURE__*/function () {
   }, {
     key: "post",
     value: function post(options) {
-      return _fetch["default"].axios(_objectSpread({}, options, {
+      return _fetch["default"].axios(_objectSpread(_objectSpread({}, options), {}, {
         method: _settings._httpType.POST
       }));
     }
@@ -111,7 +111,7 @@ var Http = /*#__PURE__*/function () {
   }, {
     key: "del",
     value: function del(options) {
-      return _fetch["default"].axios(_objectSpread({}, options, {
+      return _fetch["default"].axios(_objectSpread(_objectSpread({}, options), {}, {
         method: _settings._httpType.DELETE
       }));
     }
@@ -128,7 +128,7 @@ var Http = /*#__PURE__*/function () {
   }, {
     key: "put",
     value: function put(options) {
-      return _fetch["default"].axios(_objectSpread({}, options, {
+      return _fetch["default"].axios(_objectSpread(_objectSpread({}, options), {}, {
         method: _settings._httpType.PUT
       }));
     }
@@ -145,7 +145,7 @@ var Http = /*#__PURE__*/function () {
   }, {
     key: "patch",
     value: function patch(options) {
-      return _fetch["default"].axios(_objectSpread({}, options, {
+      return _fetch["default"].axios(_objectSpread(_objectSpread({}, options), {}, {
         method: _settings._httpType.PATCH
       }));
     }

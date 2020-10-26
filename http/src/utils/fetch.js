@@ -6,7 +6,7 @@
 
 import axios from "axios"; // 导入axios库
 import { DataType } from "wl-core" // 导入wl基础核心库
-import { _httpOptions, _httpCode } from "../config/settings"; // 导入配置项
+import { _httpOptions } from "../config/settings"; // 导入配置项
 
 /**
  * @method 配置请求拦截器
@@ -123,7 +123,7 @@ const _configResponseInterceptor = (instance, responseInterceptorSuccessCb, resp
           if (!DataType.isObject(err?.config)) {
             throw Error('responseInterceptorErrorCb必须返回一个err包含{config,response}')
           }
-          return Promise.reject(_res);;
+          return Promise.reject(_res);
         }
         // Reject with the error
         return Promise.reject(err);
@@ -141,6 +141,9 @@ const _configResponseInterceptor = (instance, responseInterceptorSuccessCb, resp
 
       // Return the promise in which recalls axios to retry the request
       return backoff.then(() => {
+        if (config.baseURL) {
+          config.url = config.url.replace(config.baseURL, "");
+        }
         return instance(config);
       });
     }
@@ -215,7 +218,6 @@ export default class Fetch {
     params,
     data,
     instance,
-    errCode,
     ...expand
   } = {}) {
     // 废弃 返回一个新的promise，注意：此promise将把http错误和与create axios时

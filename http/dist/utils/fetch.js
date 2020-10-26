@@ -155,7 +155,6 @@ var _configResponseInterceptor = function _configResponseInterceptor(instance, r
         }
 
         return Promise.reject(_res);
-        ;
       } // Reject with the error
 
 
@@ -172,6 +171,10 @@ var _configResponseInterceptor = function _configResponseInterceptor(instance, r
     }); // Return the promise in which recalls axios to retry the request
 
     return backoff.then(function () {
+      if (config.baseURL) {
+        config.url = config.url.replace(config.baseURL, "");
+      }
+
       return instance(config);
     });
   });
@@ -267,8 +270,7 @@ var Fetch = /*#__PURE__*/function () {
           params = _ref2.params,
           data = _ref2.data,
           instance = _ref2.instance,
-          errCode = _ref2.errCode,
-          expand = _objectWithoutProperties(_ref2, ["url", "method", "params", "data", "instance", "errCode"]);
+          expand = _objectWithoutProperties(_ref2, ["url", "method", "params", "data", "instance"]);
 
       // 废弃 返回一个新的promise，注意：此promise将把http错误和与create axios时
       // 整理请求参数
