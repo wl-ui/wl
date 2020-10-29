@@ -88,7 +88,7 @@ function arrayToTree(
     let children_array = array.filter(
       it => it[options.pid] === item[options.id]
     );
-    if (item[options.children] && item[options.children] instanceof Array && item[options.children].length > 0) {
+    if (Array.isArray(item[options.children]) && item[options.children].length) {
       // 去重合并数组
       item[options.children].map(i => (unique[i[options.id]] = 1));
       item[options.children].push(

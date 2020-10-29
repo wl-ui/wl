@@ -117,7 +117,7 @@ function arrayToTree() {
       return it[options.pid] === item[options.id];
     });
 
-    if (item[options.children] && item[options.children] instanceof Array && item[options.children].length > 0) {
+    if (Array.isArray(item[options.children]) && item[options.children].length) {
       var _item$options$childre;
 
       // 去重合并数组
