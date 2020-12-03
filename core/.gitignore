@@ -4,9 +4,9 @@ bin-release/
 [Oo]bj/
 [Bb]in/
 
-# src
-# .babelrc
-# yarn.lock
+src
+.babelrc
+yarn.lock
 
 # Other files and folders
 .settings/

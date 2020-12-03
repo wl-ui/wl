@@ -9,7 +9,6 @@ exports.flattenDeepParents = flattenDeepParents;
 exports.regDeepParents = regDeepParents;
 exports.arrayToTree = arrayToTree;
 exports.patchTreeChain = patchTreeChain;
-exports.locationAfterDelete = locationAfterDelete;
 exports.splicParentsUntil = splicParentsUntil;
 exports.intersectionBy = intersectionBy;
 exports.deepClone = deepClone;
@@ -103,13 +102,14 @@ function arrayToTree() {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
     id: "id",
     pid: "pid",
-    children: "children"
+    children: "children",
+    rootPidVal: rootPidVal
   };
   var array_ = []; // 创建储存剔除叶子节点后的骨架节点数组
 
   var unique = {}; // 创建盒子辅助本轮children合并去重
 
-  var root_pid = [0, "0", undefined, "undefined", null, "null", "00000000-0000-0000-0000-000000000000", ""]; // 可能存在的根节点pid形式
+  var root_pid = options.rootPidVal || [0, "0", undefined, "undefined", null, "null", "00000000-0000-0000-0000-000000000000", ""]; // 可能存在的根节点pid形式
 
   array.forEach(function (item) {
     // 筛选可以插入当前节点的所有子节点
@@ -198,50 +198,6 @@ function patchTreeChain(data, sourceData) {
 
 
   return _out_put_data.concat(data);
-}
-/**
- * 数组删除后重新定位
- * @param {Object} data 数组数据
- * @param {String|Number} delId 要删除的数据id
- * @param {string|number} actId 当前id
- * @param {Boolean} useTree 是否使用树形算法
- */
-
-
-function locationAfterDelete(data, delId, actId) {
-  var useTree = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  if (data.length === 1) {
-    var _item = data.Parent ? data.Parent : {
-      Id: useTree ? data[0].ParentId : ''
-    };
-
-    return {
-      item: _item,
-      after_data: []
-    };
-  }
-
-  var after_data = data.filter(function (item) {
-    return item.Id !== delId;
-  });
-
-  if (actId && delId !== actId) {
-    return {
-      item: null,
-      after_data: after_data
-    };
-  }
-
-  var cur_i = data.findIndex(function (item) {
-    return item.Id === delId;
-  });
-  var prv_item = cur_i > 0 ? data[cur_i - 1] : null;
-  var next_item = cur_i !== data.length - 1 ? data[cur_i + 1] : null;
-  return {
-    item: next_item || prv_item,
-    after_data: after_data
-  };
 }
 /**
  * 从坐标值拼接指定字段到祖先元素
@@ -428,7 +384,9 @@ exports.depData = depData;
 
 var autoPositionAfterDelete = function autoPositionAfterDelete(data, key, delId, actId, isTree, keyParent) {
   // 源数据校验
-  if (!Array.isArray(data)) throw Error('data必须是一个数组'); // 找到当前选中数据索引
+  if (!Array.isArray(data)) throw Error('data必须是一个数组'); // 非树形结构
+  // if (!isTree) {
+  // 找到当前选中数据索引
 
   var activeIndex = data.findIndex(function (i) {
     return i[key] === actId;
@@ -447,7 +405,8 @@ var autoPositionAfterDelete = function autoPositionAfterDelete(data, key, delId,
   return {
     nextItem: nextData[nextIndex],
     nextData: nextData
-  };
+  }; // }
+  // 树形结构
 };
 
 exports.autoPositionAfterDelete = autoPositionAfterDelete;

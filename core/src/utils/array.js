@@ -69,11 +69,11 @@ function regDeepParents(row, parent, reg) {
  */
 function arrayToTree(
   array = [],
-  options = { id: "id", pid: "pid", children: "children" },
+  options = { id: "id", pid: "pid", children: "children", rootPidVal },
 ) {
   let array_ = []; // 创建储存剔除叶子节点后的骨架节点数组
   let unique = {}; // 创建盒子辅助本轮children合并去重
-  let root_pid = [
+  let root_pid = options.rootPidVal || [
     0,
     "0",
     undefined,
@@ -157,28 +157,6 @@ function patchTreeChain(
   });
   // 最后返回当前数据和需要补全父级树链的数据
   return _out_put_data.concat(data);
-}
-
-/**
- * 数组删除后重新定位
- * @param {Object} data 数组数据
- * @param {String|Number} delId 要删除的数据id
- * @param {string|number} actId 当前id
- * @param {Boolean} useTree 是否使用树形算法
- */
-function locationAfterDelete(data, delId, actId, useTree = false) {
-  if (data.length === 1) {
-    let _item = data.Parent ? data.Parent : { Id: useTree ? data[0].ParentId : '' }
-    return { item: _item, after_data: [] }
-  }
-  let after_data = data.filter(item => item.Id !== delId);
-  if (actId && delId !== actId) {
-    return { item: null, after_data }
-  }
-  let cur_i = data.findIndex(item => item.Id === delId);
-  let prv_item = cur_i > 0 ? data[cur_i - 1] : null;
-  let next_item = cur_i !== data.length - 1 ? data[cur_i + 1] : null
-  return { item: next_item || prv_item, after_data }
 }
 
 /**
@@ -313,6 +291,8 @@ const depData = (arr, key) => {
 const autoPositionAfterDelete = (data, key, delId, actId, isTree, keyParent) => {
   // 源数据校验
   if (!Array.isArray(data)) throw Error('data必须是一个数组');
+  // 非树形结构
+  // if (!isTree) {
   // 找到当前选中数据索引
   const activeIndex = data.findIndex(i => i[key] === actId);
   // 删后数据
@@ -322,6 +302,8 @@ const autoPositionAfterDelete = (data, key, delId, actId, isTree, keyParent) => 
   // 删除的是当前选中数据，自动定位前一个数据，第0时自动定位后一个数据
   const nextIndex = activeIndex !== 0 ? activeIndex - 1 : 0
   return { nextItem: nextData[nextIndex], nextData }
+  // }
+  // 树形结构
 }
 
 export {
@@ -331,7 +313,6 @@ export {
   regDeepParents, // 根据条件递归祖先元素
   arrayToTree, // 将数组转化成树结构
   patchTreeChain, // 如果数据里缺少树枝节点，则根据parents和自增长id补全整条树链，输出数据调用上部arrToTree函数组装成完整的树
-  locationAfterDelete, // 数组删除后重新定位
   splicParentsUntil, // 从坐标值拼接指定字段到祖先元素
   intersectionBy, // 根据数组2内的元素，通过match字段匹配数组1内的完整内容组成的数据
   deepClone, // 深拷贝
