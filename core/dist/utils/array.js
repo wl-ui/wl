@@ -103,7 +103,7 @@ function arrayToTree() {
     id: "id",
     pid: "pid",
     children: "children",
-    rootPidVal: rootPidVal
+    rootPidVal: null
   };
   var array_ = []; // 创建储存剔除叶子节点后的骨架节点数组
 
