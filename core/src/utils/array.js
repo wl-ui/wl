@@ -69,7 +69,7 @@ function regDeepParents(row, parent, reg) {
  */
 function arrayToTree(
   array = [],
-  options = { id: "id", pid: "pid", children: "children", rootPidVal },
+  options = { id: "id", pid: "pid", children: "children", rootPidVal: null },
 ) {
   let array_ = []; // 创建储存剔除叶子节点后的骨架节点数组
   let unique = {}; // 创建盒子辅助本轮children合并去重
